@@ -1,0 +1,1246 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "RFPlayer",
+  "description": {
+    "en": "Ziblue RFPlayer 433/868 MHz dongle: sensors, remotes, alarms and RF actuators.",
+    "fr": "Clé RFPlayer 433/868 MHz : capteurs, télécommandes, alarmes et actionneurs radio."
+  },
+  "version": "1.0.0",
+  "docker_image": "ghcr.io/prohand/gladys-rfplayer:1.0.0",
+  "gladys_version": ">=5.1.0",
+  "cover_image": "https://raw.githubusercontent.com/prohand/gladys-rfplayer/main/cover.png",
+  "categories": ["protocols", "security", "environment"],
+  "transports": ["local"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Getting started",
+        "fr": "Pour commencer"
+      },
+      "description": {
+        "en": "The integration runs in a sandboxed container that cannot open a USB port: plug the RFPlayer into a machine of your network and expose its serial port over TCP with ser2net (or socat, an ESP-Link…), at 115200 bauds. Then type that address below. The documentation gives a ready-to-use ser2net configuration.",
+        "fr": "L'intégration tourne dans un conteneur isolé qui ne peut pas ouvrir de port USB : branchez le RFPlayer sur une machine de votre réseau et exposez son port série en TCP avec ser2net (ou socat, un ESP-Link…), à 115200 bauds. Indiquez ensuite cette adresse ci-dessous. La documentation donne une configuration ser2net prête à l'emploi."
+      },
+      "links": [
+        {
+          "url": "https://github.com/prohand/gladys-rfplayer/blob/main/docs/en.md",
+          "label": {
+            "en": "Integration documentation",
+            "fr": "Documentation de l'intégration"
+          }
+        },
+        {
+          "url": "https://github.com/cminyard/ser2net",
+          "label": {
+            "en": "ser2net",
+            "fr": "ser2net"
+          }
+        }
+      ]
+    },
+    {
+      "key": "host",
+      "type": "string",
+      "label": {
+        "en": "Bridge host",
+        "fr": "Hôte de la passerelle"
+      },
+      "description": {
+        "en": "IP address or name of the machine running the serial-to-TCP bridge. To reach the Gladys host itself, use its LAN IP (not localhost: the integration has its own network).",
+        "fr": "Adresse IP ou nom de la machine qui fait tourner la passerelle série-TCP. Pour joindre la machine de Gladys elle-même, utilisez son IP sur le réseau local (pas localhost : l'intégration a son propre réseau)."
+      },
+      "placeholder": {
+        "en": "e.g. 192.168.1.10",
+        "fr": "ex. 192.168.1.10"
+      },
+      "required": true
+    },
+    {
+      "key": "port",
+      "type": "number",
+      "label": {
+        "en": "Bridge TCP port",
+        "fr": "Port TCP de la passerelle"
+      },
+      "description": {
+        "en": "TCP port the bridge listens on (ser2net example: 4000).",
+        "fr": "Port TCP sur lequel écoute la passerelle (exemple ser2net : 4000)."
+      },
+      "required": false,
+      "default": 4000,
+      "min": 1,
+      "max": 65535
+    },
+    {
+      "key": "receiver_protocols",
+      "type": "multi_select",
+      "label": {
+        "en": "Protocols received",
+        "fr": "Protocoles reçus"
+      },
+      "description": {
+        "en": "Radio protocols the dongle decodes. Leave everything unticked to receive them all. Unticking the protocols you do not use reduces false detections and the neighbours heard.",
+        "fr": "Protocoles radio décodés par la clé. Ne cochez rien pour tous les recevoir. Décocher les protocoles inutilisés réduit les fausses détections et les voisins entendus."
+      },
+      "required": false,
+      "options": [
+        {
+          "value": "X10",
+          "label": {
+            "en": "X10",
+            "fr": "X10"
+          }
+        },
+        {
+          "value": "RTS",
+          "label": {
+            "en": "RTS",
+            "fr": "RTS"
+          }
+        },
+        {
+          "value": "VISONIC",
+          "label": {
+            "en": "VISONIC",
+            "fr": "VISONIC"
+          }
+        },
+        {
+          "value": "BLYSS",
+          "label": {
+            "en": "BLYSS",
+            "fr": "BLYSS"
+          }
+        },
+        {
+          "value": "CHACON",
+          "label": {
+            "en": "CHACON",
+            "fr": "CHACON"
+          }
+        },
+        {
+          "value": "OREGONV1",
+          "label": {
+            "en": "OREGONV1",
+            "fr": "OREGONV1"
+          }
+        },
+        {
+          "value": "OREGONV2",
+          "label": {
+            "en": "OREGONV2",
+            "fr": "OREGONV2"
+          }
+        },
+        {
+          "value": "OREGONV3/OWL",
+          "label": {
+            "en": "OREGONV3/OWL",
+            "fr": "OREGONV3/OWL"
+          }
+        },
+        {
+          "value": "DOMIA",
+          "label": {
+            "en": "DOMIA",
+            "fr": "DOMIA"
+          }
+        },
+        {
+          "value": "X2D",
+          "label": {
+            "en": "X2D",
+            "fr": "X2D"
+          }
+        },
+        {
+          "value": "KD101",
+          "label": {
+            "en": "KD101",
+            "fr": "KD101"
+          }
+        },
+        {
+          "value": "PARROT",
+          "label": {
+            "en": "PARROT",
+            "fr": "PARROT"
+          }
+        },
+        {
+          "value": "TIC",
+          "label": {
+            "en": "TIC",
+            "fr": "TIC"
+          }
+        },
+        {
+          "value": "FS20",
+          "label": {
+            "en": "FS20",
+            "fr": "FS20"
+          }
+        },
+        {
+          "value": "JAMMING",
+          "label": {
+            "en": "JAMMING",
+            "fr": "JAMMING"
+          }
+        },
+        {
+          "value": "EDISIO",
+          "label": {
+            "en": "EDISIO",
+            "fr": "EDISIO"
+          }
+        }
+      ]
+    },
+    {
+      "key": "min_quality",
+      "type": "number",
+      "label": {
+        "en": "Minimum radio quality",
+        "fr": "Qualité radio minimale"
+      },
+      "description": {
+        "en": "Frames heard with a quality below this value (1 to 10, as graded by the dongle) are ignored: raise it to 3 or 4 to stop picking up the neighbours. 0 keeps everything.",
+        "fr": "Les trames entendues avec une qualité inférieure (1 à 10, notée par la clé) sont ignorées : montez à 3 ou 4 pour ne plus capter les voisins. 0 garde tout."
+      },
+      "required": false,
+      "default": 0,
+      "min": 0,
+      "max": 10
+    },
+    {
+      "key": "jamming_threshold",
+      "type": "number",
+      "label": {
+        "en": "Jamming detection threshold",
+        "fr": "Seuil de détection de brouillage"
+      },
+      "description": {
+        "en": "Sensitivity of the jamming detector built into the dongle: 1 is very sensitive (false alarms), 10 needs a jammer on both bands, 0 turns it off. The dongle default is 7.",
+        "fr": "Sensibilité du détecteur de brouillage intégré à la clé : 1 est très sensible (fausses alertes), 10 demande un brouilleur sur les deux bandes, 0 le désactive. La valeur par défaut de la clé est 7."
+      },
+      "required": false,
+      "default": 7,
+      "min": 0,
+      "max": 10
+    },
+    {
+      "key": "oregon_identity",
+      "type": "select",
+      "label": {
+        "en": "Identify Oregon / OWL probes by",
+        "fr": "Identifier les sondes Oregon / OWL par"
+      },
+      "description": {
+        "en": "Their random address changes at every battery change. \"Address\" tells apart two identical probes on the same channel, but creates a new device after a battery change. \"Model and channel\" survives battery changes, as long as each probe of a model has its own channel. Changing this creates new devices.",
+        "fr": "Leur adresse aléatoire change à chaque changement de piles. « Adresse » distingue deux sondes identiques sur le même canal, mais crée un nouvel appareil après un changement de piles. « Modèle et canal » survit aux changements de piles, tant que chaque sonde d'un modèle a son propre canal. Changer ce choix crée de nouveaux appareils."
+      },
+      "required": false,
+      "default": "address",
+      "options": [
+        {
+          "value": "address",
+          "label": {
+            "en": "Address",
+            "fr": "Adresse"
+          }
+        },
+        {
+          "value": "channel",
+          "label": {
+            "en": "Model and channel",
+            "fr": "Modèle et canal"
+          }
+        }
+      ]
+    },
+    {
+      "key": "actuators",
+      "type": "string",
+      "label": {
+        "en": "Actuators",
+        "fr": "Actionneurs"
+      },
+      "description": {
+        "en": "Receivers the dongle drives, separated by \";\": Name = kind PROTOCOL address. Kinds: switch, light, shutter, button. Address: 0 to 255, or A1 to P16. Options: qualifier=n, burst=n. The \"Pair an actuator\" button fills this field for you.",
+        "fr": "Récepteurs pilotés par la clé, séparés par « ; » : Nom = type PROTOCOLE adresse. Types : switch, light, shutter, button. Adresse : 0 à 255, ou A1 à P16. Options : qualifier=n, burst=n. Le bouton « Appairer un actionneur » remplit ce champ pour vous."
+      },
+      "placeholder": {
+        "en": "Living room shutter = shutter RTS 1; Desk lamp = switch CHACON 12",
+        "fr": "Volet salon = shutter RTS 1; Lampe bureau = switch CHACON 12"
+      },
+      "required": false
+    },
+    {
+      "key": "detector_kinds",
+      "type": "string",
+      "label": {
+        "en": "Detector types",
+        "fr": "Types de détecteurs"
+      },
+      "description": {
+        "en": "On the air a door contact and a motion detector look the same. Tell which is which, separated by \";\": PROTOCOL id = kind (motion, opening, smoke, leak, vibration, presence). The id is shown in the widget. Unlisted detectors are motion detectors (smoke for KD101).",
+        "fr": "Sur les ondes, un contact de porte et un détecteur de mouvement se ressemblent. Précisez lequel est lequel, séparés par « ; » : PROTOCOLE id = type (motion, opening, smoke, leak, vibration, presence). L'id est affiché dans le widget. Les détecteurs non listés sont des détecteurs de mouvement (fumée pour KD101)."
+      },
+      "placeholder": {
+        "en": "VISONIC 1166992416 = opening",
+        "fr": "VISONIC 1166992416 = opening"
+      },
+      "required": false
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion"
+      },
+      "timeout_seconds": 20
+    },
+    {
+      "key": "pair_actuator",
+      "label": {
+        "en": "Pair an actuator",
+        "fr": "Appairer un actionneur"
+      },
+      "timeout_seconds": 20,
+      "fields": [
+        {
+          "key": "pair_intro",
+          "type": "section",
+          "label": {
+            "en": "Declare and pair a receiver",
+            "fr": "Déclarer et appairer un récepteur"
+          },
+          "description": {
+            "en": "Put the receiver in learning mode first (button pressed on a Chacon plug, PROG held on the remote of a Somfy RTS shutter…), then run this action: the dongle sends the pairing frame and the receiver is added to the Actuators field.",
+            "fr": "Mettez d'abord le récepteur en mode apprentissage (bouton appuyé sur une prise Chacon, PROG maintenu sur la télécommande d'un volet Somfy RTS…), puis lancez cette action : la clé envoie la trame d'appairage et le récepteur est ajouté au champ Actionneurs."
+          }
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Name",
+            "fr": "Nom"
+          },
+          "placeholder": {
+            "en": "Living room shutter",
+            "fr": "Volet salon"
+          },
+          "required": true
+        },
+        {
+          "key": "kind",
+          "type": "select",
+          "label": {
+            "en": "Kind",
+            "fr": "Type"
+          },
+          "required": true,
+          "default": "switch",
+          "options": [
+            {
+              "value": "switch",
+              "label": {
+                "en": "Switch / plug",
+                "fr": "Interrupteur / prise"
+              }
+            },
+            {
+              "value": "light",
+              "label": {
+                "en": "Dimmable light",
+                "fr": "Lampe variable"
+              }
+            },
+            {
+              "value": "shutter",
+              "label": {
+                "en": "Shutter",
+                "fr": "Volet"
+              }
+            },
+            {
+              "value": "button",
+              "label": {
+                "en": "Button (gate, bell)",
+                "fr": "Bouton (portail, sonnette)"
+              }
+            }
+          ]
+        },
+        {
+          "key": "protocol",
+          "type": "select",
+          "label": {
+            "en": "Protocol",
+            "fr": "Protocole"
+          },
+          "required": true,
+          "default": "CHACON",
+          "options": [
+            {
+              "value": "X10",
+              "label": {
+                "en": "X10",
+                "fr": "X10"
+              }
+            },
+            {
+              "value": "CHACON",
+              "label": {
+                "en": "CHACON",
+                "fr": "CHACON"
+              }
+            },
+            {
+              "value": "DOMIA",
+              "label": {
+                "en": "DOMIA",
+                "fr": "DOMIA"
+              }
+            },
+            {
+              "value": "BLYSS",
+              "label": {
+                "en": "BLYSS",
+                "fr": "BLYSS"
+              }
+            },
+            {
+              "value": "RTS",
+              "label": {
+                "en": "RTS",
+                "fr": "RTS"
+              }
+            },
+            {
+              "value": "VISONIC433",
+              "label": {
+                "en": "VISONIC433",
+                "fr": "VISONIC433"
+              }
+            },
+            {
+              "value": "VISONIC868",
+              "label": {
+                "en": "VISONIC868",
+                "fr": "VISONIC868"
+              }
+            },
+            {
+              "value": "X2D433",
+              "label": {
+                "en": "X2D433",
+                "fr": "X2D433"
+              }
+            },
+            {
+              "value": "X2D868",
+              "label": {
+                "en": "X2D868",
+                "fr": "X2D868"
+              }
+            },
+            {
+              "value": "X2DSHUTTER",
+              "label": {
+                "en": "X2DSHUTTER",
+                "fr": "X2DSHUTTER"
+              }
+            },
+            {
+              "value": "X2DELEC",
+              "label": {
+                "en": "X2DELEC",
+                "fr": "X2DELEC"
+              }
+            },
+            {
+              "value": "X2DGAS",
+              "label": {
+                "en": "X2DGAS",
+                "fr": "X2DGAS"
+              }
+            },
+            {
+              "value": "PARROT",
+              "label": {
+                "en": "PARROT",
+                "fr": "PARROT"
+              }
+            },
+            {
+              "value": "KD101",
+              "label": {
+                "en": "KD101",
+                "fr": "KD101"
+              }
+            },
+            {
+              "value": "FS20",
+              "label": {
+                "en": "FS20",
+                "fr": "FS20"
+              }
+            },
+            {
+              "value": "EDISIO",
+              "label": {
+                "en": "EDISIO",
+                "fr": "EDISIO"
+              }
+            }
+          ]
+        },
+        {
+          "key": "address",
+          "type": "string",
+          "label": {
+            "en": "Address",
+            "fr": "Adresse"
+          },
+          "description": {
+            "en": "A free number from 0 to 255 (or A1 to P16), not used by another actuator of the same protocol.",
+            "fr": "Un numéro libre de 0 à 255 (ou A1 à P16), non utilisé par un autre actionneur du même protocole."
+          },
+          "placeholder": {
+            "en": "e.g. 1",
+            "fr": "ex. 1"
+          },
+          "required": true
+        },
+        {
+          "key": "qualifier",
+          "type": "number",
+          "label": {
+            "en": "Qualifier (optional)",
+            "fr": "Qualifier (optionnel)"
+          },
+          "description": {
+            "en": "Protocol option. Somfy RTS: 1 for a gate, empty for a shutter.",
+            "fr": "Option du protocole. Somfy RTS : 1 pour un portail, vide pour un volet."
+          },
+          "required": false,
+          "min": 0,
+          "max": 255
+        },
+        {
+          "key": "send_pairing",
+          "type": "boolean",
+          "label": {
+            "en": "Send the pairing frame",
+            "fr": "Envoyer la trame d'appairage"
+          },
+          "description": {
+            "en": "Untick to only declare a receiver already paired (or an X10 module).",
+            "fr": "Décochez pour seulement déclarer un récepteur déjà appairé (ou un module X10)."
+          },
+          "required": false,
+          "default": true
+        }
+      ]
+    },
+    {
+      "key": "simulate_jamming",
+      "label": {
+        "en": "Simulate a jamming",
+        "fr": "Simuler un brouillage"
+      },
+      "timeout_seconds": 10,
+      "fields": [
+        {
+          "key": "delay",
+          "type": "number",
+          "label": {
+            "en": "Delay (s)",
+            "fr": "Délai (s)"
+          },
+          "description": {
+            "en": "Seconds before the dongle reports the jamming (0 to 255).",
+            "fr": "Secondes avant que la clé signale le brouillage (0 à 255)."
+          },
+          "required": false,
+          "default": 0,
+          "min": 0,
+          "max": 255
+        }
+      ]
+    }
+  ],
+  "widgets": [
+    {
+      "key": "rfplayer",
+      "label": {
+        "en": "RFPlayer radio",
+        "fr": "Radio RFPlayer"
+      },
+      "description": {
+        "en": "Dongle status, jamming and the last emitters heard.",
+        "fr": "État de la clé, brouillage et derniers émetteurs entendus."
+      },
+      "icon": "radio",
+      "settings": [
+        {
+          "key": "emitters",
+          "type": "number",
+          "label": {
+            "en": "Emitters shown",
+            "fr": "Émetteurs affichés"
+          },
+          "description": {
+            "en": "How many of the last emitters heard are listed (0 to 8).",
+            "fr": "Nombre de derniers émetteurs entendus à lister (0 à 8)."
+          },
+          "required": false,
+          "default": 5,
+          "min": 0,
+          "max": 8
+        }
+      ],
+      "action_timeout_seconds": 15
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "remote_pressed",
+      "label": {
+        "en": "A radio remote is pressed",
+        "fr": "Une télécommande radio est actionnée"
+      },
+      "description": {
+        "en": "A remote, wall switch or keyfob created as a device in Gladys was heard.",
+        "fr": "Une télécommande, un interrupteur mural ou un porte-clés créé comme appareil dans Gladys a été entendu."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Remote",
+            "fr": "Télécommande"
+          },
+          "required": false
+        },
+        {
+          "key": "order",
+          "type": "multi_select",
+          "label": {
+            "en": "Order",
+            "fr": "Ordre"
+          },
+          "options": [
+            {
+              "value": "on",
+              "label": {
+                "en": "On",
+                "fr": "Allumer"
+              }
+            },
+            {
+              "value": "off",
+              "label": {
+                "en": "Off",
+                "fr": "Éteindre"
+              }
+            },
+            {
+              "value": "all_on",
+              "label": {
+                "en": "All on",
+                "fr": "Tout allumer"
+              }
+            },
+            {
+              "value": "all_off",
+              "label": {
+                "en": "All off",
+                "fr": "Tout éteindre"
+              }
+            },
+            {
+              "value": "dim",
+              "label": {
+                "en": "Dim",
+                "fr": "Varier"
+              }
+            },
+            {
+              "value": "bright",
+              "label": {
+                "en": "Bright",
+                "fr": "Plus fort"
+              }
+            },
+            {
+              "value": "up",
+              "label": {
+                "en": "Up",
+                "fr": "Monter"
+              }
+            },
+            {
+              "value": "down",
+              "label": {
+                "en": "Down",
+                "fr": "Descendre"
+              }
+            },
+            {
+              "value": "my",
+              "label": {
+                "en": "My (Somfy)",
+                "fr": "My (Somfy)"
+              }
+            },
+            {
+              "value": "stop",
+              "label": {
+                "en": "Stop",
+                "fr": "Stop"
+              }
+            },
+            {
+              "value": "left",
+              "label": {
+                "en": "Left button (gate)",
+                "fr": "Bouton gauche (portail)"
+              }
+            },
+            {
+              "value": "right",
+              "label": {
+                "en": "Right button (gate)",
+                "fr": "Bouton droit (portail)"
+              }
+            },
+            {
+              "value": "key_1",
+              "label": {
+                "en": "Key 1",
+                "fr": "Touche 1"
+              }
+            },
+            {
+              "value": "key_2",
+              "label": {
+                "en": "Key 2",
+                "fr": "Touche 2"
+              }
+            },
+            {
+              "value": "key_3",
+              "label": {
+                "en": "Key 3",
+                "fr": "Touche 3"
+              }
+            },
+            {
+              "value": "key_4",
+              "label": {
+                "en": "Key 4",
+                "fr": "Touche 4"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Remote name",
+            "fr": "Nom de la télécommande"
+          }
+        },
+        {
+          "key": "order",
+          "type": "string",
+          "label": {
+            "en": "Order",
+            "fr": "Ordre"
+          }
+        },
+        {
+          "key": "protocol",
+          "type": "string",
+          "label": {
+            "en": "Protocol",
+            "fr": "Protocole"
+          }
+        },
+        {
+          "key": "address",
+          "type": "string",
+          "label": {
+            "en": "Address",
+            "fr": "Adresse"
+          }
+        }
+      ]
+    },
+    {
+      "key": "alarm_detected",
+      "label": {
+        "en": "A radio detector is triggered",
+        "fr": "Un détecteur radio se déclenche"
+      },
+      "description": {
+        "en": "Alarm or tamper of a Visonic, X2D or KD101 detector created in Gladys.",
+        "fr": "Alarme ou autoprotection d'un détecteur Visonic, X2D ou KD101 créé dans Gladys."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Detector",
+            "fr": "Détecteur"
+          },
+          "required": false
+        },
+        {
+          "key": "event",
+          "type": "multi_select",
+          "label": {
+            "en": "Event",
+            "fr": "Événement"
+          },
+          "options": [
+            {
+              "value": "alarm",
+              "label": {
+                "en": "Alarm",
+                "fr": "Alarme"
+              }
+            },
+            {
+              "value": "tamper",
+              "label": {
+                "en": "Tamper",
+                "fr": "Autoprotection"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Detector name",
+            "fr": "Nom du détecteur"
+          }
+        },
+        {
+          "key": "event",
+          "type": "string",
+          "label": {
+            "en": "Event",
+            "fr": "Événement"
+          }
+        },
+        {
+          "key": "protocol",
+          "type": "string",
+          "label": {
+            "en": "Protocol",
+            "fr": "Protocole"
+          }
+        },
+        {
+          "key": "address",
+          "type": "string",
+          "label": {
+            "en": "Address",
+            "fr": "Adresse"
+          }
+        }
+      ]
+    },
+    {
+      "key": "battery_low",
+      "label": {
+        "en": "A radio device battery is low",
+        "fr": "La pile d'un appareil radio est faible"
+      },
+      "description": {
+        "en": "A sensor or detector created in Gladys reported a low battery.",
+        "fr": "Un capteur ou détecteur créé dans Gladys a signalé une pile faible."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil"
+          },
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l'appareil"
+          }
+        }
+      ]
+    },
+    {
+      "key": "jamming",
+      "label": {
+        "en": "Radio jamming",
+        "fr": "Brouillage radio"
+      },
+      "description": {
+        "en": "The dongle detected a jammer, or the jamming stopped.",
+        "fr": "La clé a détecté un brouilleur, ou le brouillage a cessé."
+      },
+      "fields": [
+        {
+          "key": "state",
+          "type": "select",
+          "label": {
+            "en": "Jamming",
+            "fr": "Brouillage"
+          },
+          "options": [
+            {
+              "value": "started",
+              "label": {
+                "en": "Started",
+                "fr": "Commencé"
+              }
+            },
+            {
+              "value": "stopped",
+              "label": {
+                "en": "Stopped",
+                "fr": "Terminé"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "State",
+            "fr": "État"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "send_order",
+      "label": {
+        "en": "Send a radio order",
+        "fr": "Envoyer un ordre radio"
+      },
+      "description": {
+        "en": "Any order to any address, even one not declared as an actuator.",
+        "fr": "N'importe quel ordre à n'importe quelle adresse, même non déclarée comme actionneur."
+      },
+      "timeout_seconds": 15,
+      "fields": [
+        {
+          "key": "protocol",
+          "type": "select",
+          "label": {
+            "en": "Protocol",
+            "fr": "Protocole"
+          },
+          "required": true,
+          "options": [
+            {
+              "value": "X10",
+              "label": {
+                "en": "X10",
+                "fr": "X10"
+              }
+            },
+            {
+              "value": "CHACON",
+              "label": {
+                "en": "CHACON",
+                "fr": "CHACON"
+              }
+            },
+            {
+              "value": "DOMIA",
+              "label": {
+                "en": "DOMIA",
+                "fr": "DOMIA"
+              }
+            },
+            {
+              "value": "BLYSS",
+              "label": {
+                "en": "BLYSS",
+                "fr": "BLYSS"
+              }
+            },
+            {
+              "value": "RTS",
+              "label": {
+                "en": "RTS",
+                "fr": "RTS"
+              }
+            },
+            {
+              "value": "VISONIC433",
+              "label": {
+                "en": "VISONIC433",
+                "fr": "VISONIC433"
+              }
+            },
+            {
+              "value": "VISONIC868",
+              "label": {
+                "en": "VISONIC868",
+                "fr": "VISONIC868"
+              }
+            },
+            {
+              "value": "X2D433",
+              "label": {
+                "en": "X2D433",
+                "fr": "X2D433"
+              }
+            },
+            {
+              "value": "X2D868",
+              "label": {
+                "en": "X2D868",
+                "fr": "X2D868"
+              }
+            },
+            {
+              "value": "X2DSHUTTER",
+              "label": {
+                "en": "X2DSHUTTER",
+                "fr": "X2DSHUTTER"
+              }
+            },
+            {
+              "value": "X2DELEC",
+              "label": {
+                "en": "X2DELEC",
+                "fr": "X2DELEC"
+              }
+            },
+            {
+              "value": "X2DGAS",
+              "label": {
+                "en": "X2DGAS",
+                "fr": "X2DGAS"
+              }
+            },
+            {
+              "value": "PARROT",
+              "label": {
+                "en": "PARROT",
+                "fr": "PARROT"
+              }
+            },
+            {
+              "value": "KD101",
+              "label": {
+                "en": "KD101",
+                "fr": "KD101"
+              }
+            },
+            {
+              "value": "FS20",
+              "label": {
+                "en": "FS20",
+                "fr": "FS20"
+              }
+            },
+            {
+              "value": "EDISIO",
+              "label": {
+                "en": "EDISIO",
+                "fr": "EDISIO"
+              }
+            }
+          ]
+        },
+        {
+          "key": "address",
+          "type": "string",
+          "label": {
+            "en": "Address",
+            "fr": "Adresse"
+          },
+          "placeholder": {
+            "en": "0 to 255, or A1 to P16",
+            "fr": "0 à 255, ou A1 à P16"
+          },
+          "required": true
+        },
+        {
+          "key": "order",
+          "type": "select",
+          "label": {
+            "en": "Order",
+            "fr": "Ordre"
+          },
+          "required": true,
+          "options": [
+            {
+              "value": "on",
+              "label": {
+                "en": "On / up",
+                "fr": "Allumer / monter"
+              }
+            },
+            {
+              "value": "off",
+              "label": {
+                "en": "Off / down",
+                "fr": "Éteindre / descendre"
+              }
+            },
+            {
+              "value": "dim",
+              "label": {
+                "en": "Dim to level",
+                "fr": "Varier au niveau"
+              }
+            },
+            {
+              "value": "my",
+              "label": {
+                "en": "My (Somfy RTS)",
+                "fr": "My (Somfy RTS)"
+              }
+            },
+            {
+              "value": "toggle",
+              "label": {
+                "en": "Toggle (Edisio)",
+                "fr": "Inverser (Edisio)"
+              }
+            },
+            {
+              "value": "assoc",
+              "label": {
+                "en": "Pair",
+                "fr": "Appairer"
+              }
+            },
+            {
+              "value": "dissoc",
+              "label": {
+                "en": "Unpair",
+                "fr": "Désappairer"
+              }
+            }
+          ]
+        },
+        {
+          "key": "level",
+          "type": "number",
+          "label": {
+            "en": "Level (%)",
+            "fr": "Niveau (%)"
+          },
+          "required": false,
+          "default": 50,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "qualifier",
+          "type": "number",
+          "label": {
+            "en": "Qualifier (optional)",
+            "fr": "Qualifier (optionnel)"
+          },
+          "required": false,
+          "min": 0,
+          "max": 255
+        }
+      ],
+      "outputs": [
+        {
+          "key": "sent",
+          "type": "boolean",
+          "label": {
+            "en": "Order sent",
+            "fr": "Ordre envoyé"
+          }
+        },
+        {
+          "key": "command",
+          "type": "string",
+          "label": {
+            "en": "Command",
+            "fr": "Commande"
+          }
+        }
+      ]
+    },
+    {
+      "key": "simulate_jamming",
+      "label": {
+        "en": "Simulate a radio jamming",
+        "fr": "Simuler un brouillage radio"
+      },
+      "description": {
+        "en": "Test an alarm scene: the dongle reports a jamming, then its end 5 s later.",
+        "fr": "Tester une scène d'alarme : la clé signale un brouillage, puis sa fin 5 s après."
+      },
+      "timeout_seconds": 10,
+      "fields": [
+        {
+          "key": "delay",
+          "type": "number",
+          "label": {
+            "en": "Delay (s)",
+            "fr": "Délai (s)"
+          },
+          "required": false,
+          "default": 0,
+          "min": 0,
+          "max": 255
+        }
+      ],
+      "outputs": [
+        {
+          "key": "sent",
+          "type": "boolean",
+          "label": {
+            "en": "Simulation sent",
+            "fr": "Simulation envoyée"
+          }
+        }
+      ]
+    }
+  ]
+}
