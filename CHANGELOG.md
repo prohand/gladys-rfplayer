@@ -4,7 +4,11 @@ All notable changes to this integration are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [semantic versioning](https://semver.org/), bumped by the Release workflow.
 
-Describe each change under `## [Unreleased]` as you make it. The Release
+Describe each change under `## [Unreleased]
+
+## [2.0.0] - 2026-10-12
+
+` as you make it. The Release
 workflow moves that section under the version it ships, and the section becomes
 the notes of the version's GitHub Release.
 
@@ -42,4 +46,5 @@ the notes of the version's GitHub Release.
   `CLAUDE.md`, CI (format, lint, tests on Node 22 and 24, store checks, Docker
   build), UI-driven releases and Dependabot.
 
-[Unreleased]: https://github.com/prohand/gladys-rfplayer/commits/main
+[Unreleased]: https://github.com/prohand/gladys-rfplayer/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/prohand/gladys-rfplayer/releases/tag/v2.0.0
