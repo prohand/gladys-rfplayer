@@ -48,3 +48,7 @@ the notes of the version's GitHub Release.
 
 [Unreleased]: https://github.com/prohand/gladys-rfplayer/compare/v2.0.0...HEAD
 [2.0.0]: https://github.com/prohand/gladys-rfplayer/releases/tag/v2.0.0
+
+### Changed
+
+- `@gladysassistant/integration-sdk` updated to 0.15.0.
