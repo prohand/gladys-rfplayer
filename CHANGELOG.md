@@ -4,15 +4,21 @@ All notable changes to this integration are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [semantic versioning](https://semver.org/), bumped by the Release workflow.
 
-Describe each change under `## [Unreleased]
-
-## [2.0.0] - 2026-10-12
-
-` as you make it. The Release
+Describe each change under `## [Unreleased]` as you make it. The Release
 workflow moves that section under the version it ships, and the section becomes
 the notes of the version's GitHub Release.
 
 ## [Unreleased]
+
+### Changed
+
+- `@gladysassistant/integration-sdk` updated to 0.15.0.
+
+### Fixed
+
+- The release script no longer takes the mention of the Unreleased heading in the changelog intro for the section itself, which had left the previous release notes inside the intro.
+
+## [2.0.0] - 2026-10-12
 
 ### Added
 

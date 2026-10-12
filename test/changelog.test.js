@@ -41,3 +41,20 @@ test('an empty release still names the version', () => {
   const rolled = rollChangelog('# Changelog\n\n## [Unreleased]\n', '1.0.1', '2026-01-02');
   assert.match(rolled, /## \[1\.0\.1\] - 2026-01-02\n\n- Maintenance release/);
 });
+
+test('a mention of the heading in the intro text is not the section', () => {
+  // The 1.x release wrote its section inside the intro, which quotes the heading.
+  const before =
+    '# Changelog\n\nDescribe each change under `## [Unreleased]` as you make it.\n\n' +
+    '## [Unreleased]\n\n### Added\n\n- Something new.\n\n' +
+    '[Unreleased]: https://example.org/commits/main\n';
+  const after = rollChangelog(before, '1.0.0', '2026-10-12');
+  assert.match(after, /under `## \[Unreleased\]` as you make it\./);
+  assert.match(after, /## \[1\.0\.0\] - 2026-10-12\n\n### Added\n\n- Something new\./);
+});
+
+test('a version already in the changelog is not written twice', () => {
+  const before = '## [Unreleased]\n\n- Fix.\n\n[Unreleased]: https://example.org/commits/main\n';
+  const once = rollChangelog(before, '1.0.0', '2026-10-12');
+  assert.equal(rollChangelog(once, '1.0.0', '2026-10-13'), once);
+});
