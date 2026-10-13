@@ -105,12 +105,16 @@ export class RfPlayerService {
       message = {
         en: 'Enter the address of the serial-to-TCP bridge of your RFPlayer.',
         fr: "Renseignez l'adresse de la passerelle série-TCP de votre RFPlayer.",
+        de: 'Geben Sie die Adresse der Seriell-TCP-Bridge Ihres RFPlayer ein.',
+        es: 'Indique la dirección del puente serie-TCP de su RFPlayer.',
       };
     } else {
       const reason = this.link.lastError ?? 'connecting';
       message = {
         en: `RFPlayer unreachable at ${this.config.host}:${this.config.port} (${reason}).`,
         fr: `RFPlayer injoignable à ${this.config.host}:${this.config.port} (${reason}).`,
+        de: `RFPlayer unter ${this.config.host}:${this.config.port} nicht erreichbar (${reason}).`,
+        es: `RFPlayer inaccesible en ${this.config.host}:${this.config.port} (${reason}).`,
       };
     }
     await this.gladys.setConnectionStatus(false, message);

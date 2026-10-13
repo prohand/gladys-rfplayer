@@ -49,7 +49,7 @@ src/rfplayer/heard.js        emitters heard, bounded, saved to /data
 src/devices/index.js         registry, discovery payload, applyEvent (states + scene events)
 src/devices/<kind>.js        gateway, sensor, detector, remote (heard) / switch, light, shutter, button (declared)
 src/capabilities/            manifest actions, scene actions, widget, free orders
-docs/en.md, docs/fr.md       user documentation (re-hosted by Gladys), kept in sync
+docs/{en,fr,de,es}.md        user documentation (re-hosted by Gladys), kept in sync
 test/                        node --test; fakes in test/helpers/
 ```
 
@@ -86,12 +86,13 @@ test/                        node --test; fakes in test/helpers/
 - **Changelog.** Every user-visible change adds a line under `## [Unreleased]`
   in `CHANGELOG.md` (`### Added`, `Changed`, `Fixed`, `Removed`, `Security`).
   Never write a version heading yourself.
-- **Manifest.** Texts are `{ "en": ..., "fr": ... }` objects (`label`,
+- **Manifest.** Texts are `{ "en", "fr", "de", "es" }` objects (`label`,
   `description`, `placeholder`). The catalog `description` holds 10 to 100
   characters per language. `test/manifest.test.js` ties the manifest to the code
   (defaults, actions, scene triggers and actions, widget, select options):
   change both sides together.
-- **User-facing text** is bilingual (English and French): messages, manifest,
-  `docs/en.md` / `docs/fr.md`.
+- **User-facing text** is `{ en, fr, de, es }` (English, French, German,
+  Spanish): messages, widget, manifest. `docs/en.md`, `docs/fr.md`, `docs/de.md`,
+  `docs/es.md` stay in sync.
 - **Style.** Prettier formats, ESLint catches mistakes. Comments explain why, in
   English. Tests never touch the network nor real hardware.

@@ -117,7 +117,9 @@ test('dynamic selects declare a source and no static options', () => {
   }
 });
 
-test('every text is multi-language, with English and French', () => {
+const LANGUAGES = ['en', 'fr', 'de', 'es'];
+
+test('every text is multi-language, in English, French, German and Spanish', () => {
   const texts = [];
   const walk = (node, path) => {
     if (Array.isArray(node)) {
@@ -135,12 +137,26 @@ test('every text is multi-language, with English and French', () => {
   walk(manifest, 'manifest');
   assert.ok(texts.length > 50);
   for (const [path, value] of texts) {
-    assert.equal(typeof value, 'object', `${path} must be { en, fr }`);
-    assert.ok(value.en && value.fr, `${path} needs en and fr`);
+    assert.equal(typeof value, 'object', `${path} must be { en, fr, de, es }`);
+    for (const lang of LANGUAGES) {
+      assert.ok(value[lang], `${path} needs ${lang}`);
+    }
+    for (const lang of Object.keys(value)) {
+      assert.match(lang, /^[a-z]{2}$/, `${path}: ${lang} is not a language key`);
+    }
+  }
+});
+
+test('section texts hold at most 1000 characters per language', () => {
+  for (const field of allFields.filter((f) => f.type === 'section')) {
+    for (const [lang, text] of Object.entries(field.description ?? {})) {
+      assert.ok(text.length <= 1000, `${field.key}.description.${lang}: ${text.length}`);
+    }
   }
 });
 
 test('the catalog description holds 10 to 100 characters per language', () => {
+  assert.deepEqual(Object.keys(manifest.description), LANGUAGES);
   for (const [lang, text] of Object.entries(manifest.description)) {
     assert.ok(text.length >= 10 && text.length <= 100, `description.${lang}: ${text.length}`);
   }
@@ -148,6 +164,8 @@ test('the catalog description holds 10 to 100 characters per language', () => {
 
 test('widget labels hold 3 to 30 characters, descriptions at most 100', () => {
   for (const widget of manifest.widgets) {
+    assert.deepEqual(Object.keys(widget.label), LANGUAGES);
+    assert.deepEqual(Object.keys(widget.description), LANGUAGES);
     for (const text of Object.values(widget.label)) {
       assert.ok(text.length >= 3 && text.length <= 30, text);
     }

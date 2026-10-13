@@ -8,6 +8,22 @@ import { freeOrderCommand } from '../src/capabilities/orders.js';
 import { createService } from './helpers/setup.js';
 import { FRAMES } from './helpers/frames.js';
 
+// Every multi-language object a user reads carries the four Gladys UI languages.
+function assertTranslated(node, path = 'content') {
+  if (Array.isArray(node)) {
+    node.forEach((child, i) => assertTranslated(child, `${path}[${i}]`));
+    return;
+  }
+  if (!node || typeof node !== 'object') return;
+  if (typeof node.en === 'string') {
+    for (const lang of ['fr', 'de', 'es']) {
+      assert.equal(typeof node[lang], 'string', `${path} needs ${lang}`);
+    }
+    return;
+  }
+  for (const [key, value] of Object.entries(node)) assertTranslated(value, `${path}.${key}`);
+}
+
 // --- Scene actions -----------------------------------------------------------
 
 test('send_order sends any order and returns the declared outputs', async () => {
@@ -71,11 +87,16 @@ test('test_connection reports the dongle, or why it cannot be reached', async ()
   assert.match(ok.en, /1 actuator\(s\)/);
   assert.match(ok.en, /Configuration errors/);
   assert.ok(ok.fr);
+  assert.match(ok.de, /Antwort in 12 ms/);
+  assert.match(ok.es, /respuesta en 12 ms/);
+  assertTranslated(ok);
 
   const down = await createService({ ready: false });
   assert.match((await MANIFEST_ACTIONS.test_connection(down.service, {})).en, /unreachable/);
   const none = await createService({ ready: false, config: { host: '' } });
   assert.match((await MANIFEST_ACTIONS.test_connection(none.service, {})).en, /Host field/);
+  assertTranslated(await MANIFEST_ACTIONS.test_connection(down.service, {}));
+  assertTranslated(await MANIFEST_ACTIONS.test_connection(none.service, {}));
 });
 
 test('pair_actuator sends ASSOC and appends the actuator to the configuration', async () => {
@@ -150,6 +171,8 @@ test('the widget content is rendered exactly as sent, empty or busy', async () =
   busy.gladys.create('ext:rfplayer:remote:chacon-146139014');
   const content = buildWidget(busy.service, { settings: { emitters: 8 } });
   assert.deepEqual(validateWidgetContent(content), []);
+  assertTranslated(content);
+  assertTranslated(buildWidget(empty.service));
   const list = content.components.find((c) => c.type === 'card-list');
   assert.equal(list.items.length, 8);
   const jamming = content.components.find((c) => c.type === 'status').items.at(-1);
@@ -171,11 +194,15 @@ test('the widget button pings the dongle', async () => {
   assert.match((await widgetAction(up.service, 'ping')).en, /12 ms/);
   const down = await createService({ ready: false });
   assert.match((await widgetAction(down.service, 'ping')).en, /not connected/);
+  assertTranslated(await widgetAction(up.service, 'ping'));
+  assertTranslated(await widgetAction(down.service, 'ping'));
   await assert.rejects(widgetAction(up.service, 'nope'), /Unknown widget action/);
 });
 
 test('describeAge', () => {
-  assert.deepEqual(describeAge(null, 0), { en: 'never', fr: 'jamais' });
+  assert.deepEqual(describeAge(null, 0), { en: 'never', fr: 'jamais', de: 'nie', es: 'nunca' });
   assert.equal(describeAge(0, 30_000).en, '30 s ago');
   assert.equal(describeAge(0, 3 * 86_400_000).fr, 'il y a 3 j');
+  assert.equal(describeAge(0, 3 * 86_400_000).de, 'vor 3 T.');
+  assert.equal(describeAge(0, 90_000).es, 'hace 2 min');
 });

@@ -24,6 +24,8 @@ const notConnected = (service) => {
     return {
       en: 'No bridge address yet: fill in the Host field and save.',
       fr: "Pas encore d'adresse de passerelle : remplissez le champ Hôte et enregistrez.",
+      de: 'Noch keine Bridge-Adresse: Füllen Sie das Feld Host der Bridge aus und speichern Sie.',
+      es: 'Todavía no hay dirección del puente: rellene el campo Host del puente y guarde.',
     };
   }
   const where = `${service.config.host}:${service.config.port}`;
@@ -31,6 +33,8 @@ const notConnected = (service) => {
   return {
     en: `RFPlayer unreachable at ${where} (${reason}). Check that the bridge runs and the dongle is plugged in.`,
     fr: `RFPlayer injoignable à ${where} (${reason}). Vérifiez que la passerelle tourne et que la clé est branchée.`,
+    de: `RFPlayer unter ${where} nicht erreichbar (${reason}). Prüfen Sie, ob die Bridge läuft und der Stick eingesteckt ist.`,
+    es: `RFPlayer inaccesible en ${where} (${reason}). Compruebe que el puente funciona y que la llave está conectada.`,
   };
 };
 
@@ -63,11 +67,22 @@ export const MANIFEST_ACTIONS = {
         `${heard} émetteur(s) entendu(s), ${actuators} actionneur(s) déclaré(s).`,
         errors.length ? `Erreurs de configuration : ${errors.join(' | ')}` : null,
       ],
+      de: [
+        `RFPlayer ${model ?? ''} OK, Firmware ${firmware ?? '?'}, Antwort in ${ms} ms.`,
+        receivers ? `Empfang: ${receivers.join(' ')}.` : null,
+        `${heard} Sender empfangen, ${actuators} Aktor(en) angelegt.`,
+        errors.length ? `Konfigurationsfehler: ${errors.join(' | ')}` : null,
+      ],
+      es: [
+        `RFPlayer ${model ?? ''} OK, firmware ${firmware ?? '?'}, respuesta en ${ms} ms.`,
+        receivers ? `Recepción: ${receivers.join(' ')}.` : null,
+        `${heard} emisor(es) recibido(s), ${actuators} actuador(es) declarado(s).`,
+        errors.length ? `Errores de configuración: ${errors.join(' | ')}` : null,
+      ],
     };
-    return {
-      en: lines.en.filter(Boolean).join(' '),
-      fr: lines.fr.filter(Boolean).join(' '),
-    };
+    return Object.fromEntries(
+      Object.entries(lines).map(([lang, parts]) => [lang, parts.filter(Boolean).join(' ')]),
+    );
   },
 
   async pair_actuator(service, fields) {
@@ -108,6 +123,8 @@ export const MANIFEST_ACTIONS = {
     return {
       en: `"${actuator.name}" added (${line}). Create it from the Discovery tab.`,
       fr: `« ${actuator.name} » ajouté (${line}). Créez-le depuis l'onglet Découverte.`,
+      de: `„${actuator.name}“ hinzugefügt (${line}). Legen Sie es im Tab „Entdecken“ an.`,
+      es: `«${actuator.name}» añadido (${line}). Créelo desde la pestaña «Descubrir».`,
     };
   },
 
@@ -118,10 +135,19 @@ export const MANIFEST_ACTIONS = {
     const delay = Number(fields?.delay ?? 0);
     await service.link.order(simulateJammingCommand(delay));
     const when =
-      delay > 0 ? { en: `in ${delay} s`, fr: `dans ${delay} s` } : { en: 'now', fr: 'maintenant' };
+      delay > 0
+        ? {
+            en: `in ${delay} s`,
+            fr: `dans ${delay} s`,
+            de: `in ${delay} s`,
+            es: `dentro de ${delay} s`,
+          }
+        : { en: 'now', fr: 'maintenant', de: 'sofort', es: 'ahora' };
     return {
       en: `Jamming simulated: the dongle reports it ${when.en}, and its end 5 seconds later.`,
       fr: `Brouillage simulé : la clé le signale ${when.fr}, puis sa fin 5 secondes après.`,
+      de: `Störung simuliert: Der Stick meldet sie ${when.de} und ihr Ende 5 Sekunden später.`,
+      es: `Interferencia simulada: la llave la notifica ${when.es} y su fin 5 segundos después.`,
     };
   },
 };
