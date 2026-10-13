@@ -27,7 +27,7 @@
       "description": {
         "en": "The integration runs in a sandboxed container that cannot open a USB port: plug the RFPlayer into a machine of your network and expose its serial port over TCP with ser2net (or socat, an ESP-Link…), at 115200 bauds. Then type that address below. The documentation gives a ready-to-use ser2net configuration.",
         "fr": "L'intégration tourne dans un conteneur isolé qui ne peut pas ouvrir de port USB : branchez le RFPlayer sur une machine de votre réseau et exposez son port série en TCP avec ser2net (ou socat, un ESP-Link…), à 115200 bauds. Indiquez ensuite cette adresse ci-dessous. La documentation donne une configuration ser2net prête à l'emploi.",
-        "de": "Die Integration läuft in einem isolierten Container, der keinen USB-Port öffnen kann: Stecken Sie den RFPlayer an einen Rechner in Ihrem Netzwerk und stellen Sie seine serielle Schnittstelle mit ser2net (oder socat, einem ESP-Link…) über TCP bereit, mit 115200 Baud. Geben Sie diese Adresse dann unten ein. Die Dokumentation enthält eine einsatzbereite ser2net-Konfiguration.",
+        "de": "Die Integration läuft in einem isolierten Container, der keinen USB-Port öffnen kann: Stecke den RFPlayer an einen Rechner in deinem Netzwerk und stelle seine serielle Schnittstelle mit ser2net (oder socat, einem ESP-Link…) über TCP bereit, mit 115200 Baud. Gib diese Adresse dann unten ein. Die Dokumentation enthält eine einsatzbereite ser2net-Konfiguration.",
         "es": "La integración se ejecuta en un contenedor aislado que no puede abrir un puerto USB: conecte el RFPlayer a un equipo de su red y exponga su puerto serie por TCP con ser2net (o socat, un ESP-Link…), a 115200 baudios. Después indique esa dirección abajo. La documentación ofrece una configuración de ser2net lista para usar."
       },
       "links": [
@@ -63,7 +63,7 @@
       "description": {
         "en": "IP address or name of the machine running the serial-to-TCP bridge. To reach the Gladys host itself, use its LAN IP (not localhost: the integration has its own network).",
         "fr": "Adresse IP ou nom de la machine qui fait tourner la passerelle série-TCP. Pour joindre la machine de Gladys elle-même, utilisez son IP sur le réseau local (pas localhost : l'intégration a son propre réseau).",
-        "de": "IP-Adresse oder Name des Rechners, auf dem die Seriell-TCP-Bridge läuft. Für den Gladys-Rechner selbst verwenden Sie seine IP im lokalen Netzwerk (nicht localhost: Die Integration hat ihr eigenes Netzwerk).",
+        "de": "IP-Adresse oder Name des Rechners, auf dem die Seriell-TCP-Bridge läuft. Für den Gladys-Rechner selbst verwendest du seine IP im lokalen Netzwerk (nicht localhost: Die Integration hat ihr eigenes Netzwerk).",
         "es": "Dirección IP o nombre del equipo que ejecuta el puente serie-TCP. Para llegar al propio equipo de Gladys, use su IP de la red local (no localhost: la integración tiene su propia red)."
       },
       "placeholder": {
@@ -106,7 +106,7 @@
       "description": {
         "en": "Radio protocols the dongle decodes. Leave everything unticked to receive them all. Unticking the protocols you do not use reduces false detections and the neighbours heard.",
         "fr": "Protocoles radio décodés par la clé. Ne cochez rien pour tous les recevoir. Décocher les protocoles inutilisés réduit les fausses détections et les voisins entendus.",
-        "de": "Funkprotokolle, die der Stick dekodiert. Lassen Sie alles abgewählt, um alle zu empfangen. Das Abwählen nicht genutzter Protokolle verringert Fehlerkennungen und empfangene Nachbargeräte.",
+        "de": "Funkprotokolle, die der Stick dekodiert. Lass alles abgewählt, um alle zu empfangen. Das Abwählen nicht genutzter Protokolle verringert Fehlerkennungen und empfangene Nachbargeräte.",
         "es": "Protocolos de radio que decodifica la llave. No marque ninguno para recibirlos todos. Desmarcar los protocolos que no usa reduce las falsas detecciones y los vecinos captados."
       },
       "required": false,
@@ -269,7 +269,7 @@
       "description": {
         "en": "Frames heard with a quality below this value (1 to 10, as graded by the dongle) are ignored: raise it to 3 or 4 to stop picking up the neighbours. 0 keeps everything.",
         "fr": "Les trames entendues avec une qualité inférieure (1 à 10, notée par la clé) sont ignorées : montez à 3 ou 4 pour ne plus capter les voisins. 0 garde tout.",
-        "de": "Empfangene Frames mit einer Qualität unter diesem Wert (1 bis 10, vom Stick bewertet) werden ignoriert: Erhöhen Sie auf 3 oder 4, um die Nachbarn nicht mehr zu empfangen. 0 behält alles.",
+        "de": "Empfangene Frames mit einer Qualität unter diesem Wert (1 bis 10, vom Stick bewertet) werden ignoriert: Erhöhe auf 3 oder 4, um die Nachbarn nicht mehr zu empfangen. 0 behält alles.",
         "es": "Las tramas recibidas con una calidad inferior a este valor (1 a 10, según la llave) se ignoran: súbalo a 3 o 4 para dejar de captar a los vecinos. 0 lo conserva todo."
       },
       "required": false,
@@ -347,7 +347,7 @@
       "description": {
         "en": "Receivers the dongle drives, separated by \";\": Name = kind PROTOCOL address. Kinds: switch, light, shutter, button. Address: 0 to 255, or A1 to P16. Options: qualifier=n, burst=n. The \"Pair an actuator\" button fills this field for you.",
         "fr": "Récepteurs pilotés par la clé, séparés par « ; » : Nom = type PROTOCOLE adresse. Types : switch, light, shutter, button. Adresse : 0 à 255, ou A1 à P16. Options : qualifier=n, burst=n. Le bouton « Appairer un actionneur » remplit ce champ pour vous.",
-        "de": "Vom Stick gesteuerte Empfänger, getrennt durch „;“: Name = Typ PROTOKOLL Adresse. Typen: switch, light, shutter, button. Adresse: 0 bis 255 oder A1 bis P16. Optionen: qualifier=n, burst=n. Die Schaltfläche „Aktor anlernen“ füllt dieses Feld für Sie aus.",
+        "de": "Vom Stick gesteuerte Empfänger, getrennt durch „;“: Name = Typ PROTOKOLL Adresse. Typen: switch, light, shutter, button. Adresse: 0 bis 255 oder A1 bis P16. Optionen: qualifier=n, burst=n. Die Schaltfläche „Aktor anlernen“ füllt dieses Feld für dich aus.",
         "es": "Receptores que controla la llave, separados por «;»: Nombre = tipo PROTOCOLO dirección. Tipos: switch, light, shutter, button. Dirección: 0 a 255, o A1 a P16. Opciones: qualifier=n, burst=n. El botón «Emparejar un actuador» rellena este campo por usted."
       },
       "placeholder": {
@@ -370,7 +370,7 @@
       "description": {
         "en": "On the air a door contact and a motion detector look the same. Tell which is which, separated by \";\": PROTOCOL id = kind (motion, opening, smoke, leak, vibration, presence). The id is shown in the widget. Unlisted detectors are motion detectors (smoke for KD101).",
         "fr": "Sur les ondes, un contact de porte et un détecteur de mouvement se ressemblent. Précisez lequel est lequel, séparés par « ; » : PROTOCOLE id = type (motion, opening, smoke, leak, vibration, presence). L'id est affiché dans le widget. Les détecteurs non listés sont des détecteurs de mouvement (fumée pour KD101).",
-        "de": "Über Funk sehen ein Türkontakt und ein Bewegungsmelder gleich aus. Geben Sie an, welcher welcher ist, getrennt durch „;“: PROTOKOLL id = Typ (motion, opening, smoke, leak, vibration, presence). Die id wird im Widget angezeigt. Nicht aufgeführte Melder sind Bewegungsmelder (Rauchmelder bei KD101).",
+        "de": "Über Funk sehen ein Türkontakt und ein Bewegungsmelder gleich aus. Gib an, welcher welcher ist, getrennt durch „;“: PROTOKOLL id = Typ (motion, opening, smoke, leak, vibration, presence). Die id wird im Widget angezeigt. Nicht aufgeführte Melder sind Bewegungsmelder (Rauchmelder bei KD101).",
         "es": "Por radio, un contacto de puerta y un detector de movimiento parecen iguales. Indique cuál es cuál, separados por «;»: PROTOCOLO id = tipo (motion, opening, smoke, leak, vibration, presence). El id se muestra en el widget. Los detectores no indicados son detectores de movimiento (humo para KD101)."
       },
       "placeholder": {
@@ -415,7 +415,7 @@
           "description": {
             "en": "Put the receiver in learning mode first (button pressed on a Chacon plug, PROG held on the remote of a Somfy RTS shutter…), then run this action: the dongle sends the pairing frame and the receiver is added to the Actuators field.",
             "fr": "Mettez d'abord le récepteur en mode apprentissage (bouton appuyé sur une prise Chacon, PROG maintenu sur la télécommande d'un volet Somfy RTS…), puis lancez cette action : la clé envoie la trame d'appairage et le récepteur est ajouté au champ Actionneurs.",
-            "de": "Versetzen Sie den Empfänger zuerst in den Lernmodus (Taste an einer Chacon-Steckdose gedrückt, PROG an der Fernbedienung eines Somfy-RTS-Rollladens gehalten…) und führen Sie dann diese Aktion aus: Der Stick sendet den Anlern-Frame und der Empfänger wird dem Feld Aktoren hinzugefügt.",
+            "de": "Versetze den Empfänger zuerst in den Lernmodus (Taste an einer Chacon-Steckdose gedrückt, PROG an der Fernbedienung eines Somfy-RTS-Rollladens gehalten…) und führe dann diese Aktion aus: Der Stick sendet den Anlern-Frame und der Empfänger wird dem Feld Aktoren hinzugefügt.",
             "es": "Ponga primero el receptor en modo aprendizaje (botón pulsado en un enchufe Chacon, PROG mantenido en el mando de una persiana Somfy RTS…) y después ejecute esta acción: la llave envía la trama de emparejamiento y el receptor se añade al campo Actuadores."
           }
         },

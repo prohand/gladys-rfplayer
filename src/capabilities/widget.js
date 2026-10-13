@@ -114,7 +114,7 @@ export function buildWidget(service, { settings = {}, now = service.now() } = {}
       text: {
         en: 'No bridge address: set it in the configuration.',
         fr: "Pas d'adresse de passerelle : renseignez-la dans la configuration.",
-        de: 'Keine Bridge-Adresse: Tragen Sie sie in der Konfiguration ein.',
+        de: 'Keine Bridge-Adresse: Trage sie in der Konfiguration ein.',
         es: 'No hay dirección del puente: indíquela en la configuración.',
       },
     });

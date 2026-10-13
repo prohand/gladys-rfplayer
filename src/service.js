@@ -105,7 +105,7 @@ export class RfPlayerService {
       message = {
         en: 'Enter the address of the serial-to-TCP bridge of your RFPlayer.',
         fr: "Renseignez l'adresse de la passerelle série-TCP de votre RFPlayer.",
-        de: 'Geben Sie die Adresse der Seriell-TCP-Bridge Ihres RFPlayer ein.',
+        de: 'Gib die Adresse der Seriell-TCP-Bridge deines RFPlayer ein.',
         es: 'Indique la dirección del puente serie-TCP de su RFPlayer.',
       };
     } else {

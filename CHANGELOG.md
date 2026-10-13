@@ -14,6 +14,10 @@ the notes of the version's GitHub Release.
 
 - German and Spanish translations (configuration screen, messages, widgets, documentation).
 
+### Fixed
+
+- The English documentation names the Gladys screens as the Gladys interface does.
+
 ## [2.0.1] - 2026-10-12
 
 ### Changed

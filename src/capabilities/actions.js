@@ -24,7 +24,7 @@ const notConnected = (service) => {
     return {
       en: 'No bridge address yet: fill in the Host field and save.',
       fr: "Pas encore d'adresse de passerelle : remplissez le champ Hôte et enregistrez.",
-      de: 'Noch keine Bridge-Adresse: Füllen Sie das Feld Host der Bridge aus und speichern Sie.',
+      de: 'Noch keine Bridge-Adresse: Fülle das Feld Host der Bridge aus und speichere.',
       es: 'Todavía no hay dirección del puente: rellene el campo Host del puente y guarde.',
     };
   }
@@ -33,7 +33,7 @@ const notConnected = (service) => {
   return {
     en: `RFPlayer unreachable at ${where} (${reason}). Check that the bridge runs and the dongle is plugged in.`,
     fr: `RFPlayer injoignable à ${where} (${reason}). Vérifiez que la passerelle tourne et que la clé est branchée.`,
-    de: `RFPlayer unter ${where} nicht erreichbar (${reason}). Prüfen Sie, ob die Bridge läuft und der Stick eingesteckt ist.`,
+    de: `RFPlayer unter ${where} nicht erreichbar (${reason}). Prüfe, ob die Bridge läuft und der Stick eingesteckt ist.`,
     es: `RFPlayer inaccesible en ${where} (${reason}). Compruebe que el puente funciona y que la llave está conectada.`,
   };
 };
@@ -121,9 +121,9 @@ export const MANIFEST_ACTIONS = {
     await service.gladys.setConfig({ actuators: next });
     await service.applyConfig({ ...service.rawConfig, actuators: next });
     return {
-      en: `"${actuator.name}" added (${line}). Create it from the Discovery tab.`,
+      en: `"${actuator.name}" added (${line}). Create it from the Discover tab.`,
       fr: `« ${actuator.name} » ajouté (${line}). Créez-le depuis l'onglet Découverte.`,
-      de: `„${actuator.name}“ hinzugefügt (${line}). Legen Sie es im Tab „Entdecken“ an.`,
+      de: `„${actuator.name}“ hinzugefügt (${line}). Lege es im Tab „Entdecken“ an.`,
       es: `«${actuator.name}» añadido (${line}). Créelo desde la pestaña «Descubrir».`,
     };
   },
