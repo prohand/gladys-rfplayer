@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-10-13
+
 ### Added
 
 - German and Spanish translations (configuration screen, messages, widgets, documentation).
@@ -62,6 +64,7 @@ the notes of the version's GitHub Release.
   `CLAUDE.md`, CI (format, lint, tests on Node 22 and 24, store checks, Docker
   build), UI-driven releases and Dependabot.
 
-[Unreleased]: https://github.com/prohand/gladys-rfplayer/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/prohand/gladys-rfplayer/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/prohand/gladys-rfplayer/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/prohand/gladys-rfplayer/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/prohand/gladys-rfplayer/releases/tag/v2.0.0
