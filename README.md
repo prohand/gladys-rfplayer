@@ -14,7 +14,8 @@ and the JavaScript SDK
 - **Gladys ≥ 5.1.0** (scene triggers, scene actions, dashboard widget).
 - Catalog categories: `protocols`, `security`, `environment`.
 
-User documentation: [English](docs/en.md) · [Français](docs/fr.md).
+User documentation: [English](docs/en.md) · [Français](docs/fr.md) · [Deutsch](docs/de.md) ·
+[Español](docs/es.md).
 
 ## How it reaches the dongle
 
@@ -66,7 +67,7 @@ Configuration-screen actions: **Test the connection**, **Pair an actuator**,
 │  │  └─ heard.js               # emitters heard, saved to /data
 │  ├─ devices/                  # one file per device kind + registry (index.js)
 │  └─ capabilities/             # manifest actions, scene actions, widget
-├─ docs/en.md, docs/fr.md       # user documentation (re-hosted by Gladys)
+├─ docs/{en,fr,de,es}.md        # user documentation (re-hosted by Gladys)
 ├─ test/                        # node --test, no network, no hardware
 ├─ gladys-assistant-integration.json
 ├─ Dockerfile                   # Node 24 Alpine, read-only rootfs, non-root

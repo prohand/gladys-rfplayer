@@ -1,0 +1,176 @@
+# RFPlayer-Integration
+
+Verbinde einen **Ziblue / GCE Electronics RFPlayer RFP1000** (433 und 868 MHz) mit
+Gladys: Funksensoren und -melder, Fernbedienungen und Wandschalter sowie die
+Empfänger, die der Stick steuert (Steckdosen, Lampen, Somfy-RTS-Rollläden, Tore).
+
+## 1. Den Stick über TCP bereitstellen
+
+Die Integration läuft in einem isolierten Container, der **keinen USB-Port
+öffnen kann**. Der RFPlayer bleibt an einem Rechner in deinem Netzwerk eingesteckt
+(dem Gladys-Rechner, einem Raspberry Pi…), und eine kleine „Seriell-TCP-Bridge“
+macht seine serielle Schnittstelle im Netzwerk erreichbar. Die Daten sind
+dieselben, mit 115200 Baud.
+
+Ermittle den stabilen Namen des Sticks:
+
+```bash
+ls -l /dev/serial/by-id/
+```
+
+### Mit ser2net 4 (Debian 11+, Raspberry Pi OS)
+
+```bash
+sudo apt install ser2net
+```
+
+`/etc/ser2net.yaml`:
+
+```yaml
+connection: &rfplayer
+  accepter: tcp,4000
+  enable: on
+  options:
+    kickolduser: true
+  connector: serialdev,/dev/serial/by-id/usb-XXXX-if00-port0,115200n81,local
+```
+
+Ersetze den Pfad `/dev/serial/by-id/...` durch deinen eigenen und führe dann
+`sudo systemctl restart ser2net` aus.
+
+### Mit ser2net 3
+
+`/etc/ser2net.conf`:
+
+```
+4000:raw:0:/dev/serial/by-id/usb-XXXX-if00-port0:115200 8DATABITS NONE 1STOPBIT
+```
+
+### Mit socat (schneller Test)
+
+```bash
+socat TCP-LISTEN:4000,reuseaddr,fork FILE:/dev/serial/by-id/usb-XXXX-if00-port0,b115200,raw,echo=0
+```
+
+> Die Bridge hat **kein Passwort**: Wer den Port erreicht, steuert deine
+> Funkgeräte. Lass sie in deinem lokalen Netzwerk und leite sie niemals ins
+> Internet weiter. Mit ser2net kannst du sie an eine Adresse binden:
+> `accepter: tcp,192.168.1.10,4000`.
+
+## 2. Die Integration konfigurieren
+
+| Feld                             | Was eintragen                                                                                                                     |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Host der Bridge                  | IP des Rechners, auf dem die Bridge läuft. Für den Gladys-Rechner selbst seine **LAN-IP** — `localhost` ist der Container selbst. |
+| TCP-Port der Bridge              | `4000` in den obigen Beispielen.                                                                                                  |
+| Empfangene Protokolle            | Leer lassen für alle. Wähle ab, was du nicht nutzt, um weniger Nachbarn zu empfangen.                                             |
+| Minimale Funkqualität            | 0 behält alles; 3 oder 4 verwirft die weit entfernten Sender (der Nachbarn).                                                      |
+| Schwelle der Störsendererkennung | Standardmäßig 7; 1 = sehr empfindlich, 10 = erfordert einen Störsender auf beiden Bändern, 0 = aus.                               |
+| Oregon-/OWL-Sonden erkennen über | „Adresse“ (Standard) oder „Modell und Kanal“ — siehe unten.                                                                       |
+| Aktoren                          | Die Empfänger, die der Stick steuert — siehe Abschnitt 4.                                                                         |
+| Meldertypen                      | Welcher Melder ein Türkontakt, ein Rauchmelder… ist — siehe Abschnitt 3.                                                          |
+
+Klicke auf **Verbindung testen**: Es zeigt das Modell, die Firmware, die
+Antwortzeit und die empfangenen Protokolle sowie eventuelle Fehler in deinen
+Einstellungen an.
+
+## 3. Sensoren, Melder und Fernbedienungen (empfangen)
+
+Nichts anzulegen: Sobald der Stick ein Gerät empfängt, erscheint es im Tab
+**Entdecken**. Lege die Geräte an, die dir gehören — die Sonden der
+Nachbarn werden ebenfalls empfangen, sie bleiben einfach dort. Werte und
+Szenenauslöser erreichen nur die Geräte, die du angelegt hast.
+
+- **Oregon-Scientific-Sonden**: Temperatur, Luftfeuchtigkeit, Luftdruck,
+  Windgeschwindigkeit und -richtung, Regen, UV. **OWL**-Zähler: Leistung (pro
+  Phase beim CM180i) und Energie. Oregon-Sonden wählen bei jedem Batteriewechsel
+  eine neue zufällige Adresse. Mit „Adresse“ werden zwei identische Sonden auf
+  demselben Kanal unterschieden, aber ein Batteriewechsel erzeugt ein neues Gerät.
+  Mit „Modell und Kanal“ übersteht das Gerät Batteriewechsel, solange jede Sonde
+  eines Modells auf ihren eigenen Kanal eingestellt ist. Eine Änderung dieser
+  Einstellung erzeugt neue Geräte.
+- **Visonic- und X2D-Melder**: Alarm, Sabotage und schwache Batterie. Über Funk
+  sieht ein Türkontakt wie ein Bewegungsmelder aus, teile es der Integration
+  daher in **Meldertypen** mit, z. B.
+  `VISONIC 1166992416 = opening; X2D 7894561 = smoke` (Typen: `motion`,
+  `opening`, `smoke`, `leak`, `vibration`, `presence`). Die id wird im Widget und
+  in den Geräteparametern angezeigt. Bewegungs- und Rauchmelder senden nie „es
+  hat aufgehört“: Ihr Alarm kehrt nach 1 bis 2 Minuten auf 0 zurück.
+- **KD101-Rauchmelder**: der Alarm.
+- **Fernbedienungen und Wandschalter** (Chacon/DiO, X10, Domia, Blyss, Somfy RTS,
+  X2D, Visonic-Handsender, FS20…): Das Gerät zeigt den letzten Ein-/Aus-Befehl
+  (hoch/my/runter bei einer RTS-Fernbedienung), und jeder Tastendruck löst den
+  Szenenauslöser **Eine Funkfernbedienung wird betätigt** mit dem genauen Befehl
+  aus.
+
+## 4. Aktoren (vom Stick gesteuert)
+
+Ein Empfänger kann nicht über Funk entdeckt werden: Lege ihn an. Am
+einfachsten geht das mit der Schaltfläche **Aktor anlernen**:
+
+1. Versetze den Empfänger in den Lernmodus (Taste einer Chacon-Steckdose
+   drücken, PROG auf der Original-Fernbedienung eines Somfy-RTS-Rollladens halten,
+   bis er kurz ruckelt…);
+2. Gib einen Namen, den Typ, das Protokoll und eine freie Adresse (0 bis 255
+   oder A1 bis P16) ein und führe dann die Aktion aus;
+3. Der Stick sendet den Anlern-Frame, und der Empfänger wird dem Feld
+   **Aktoren** hinzugefügt. Lege ihn im Tab **Entdecken** an.
+
+Du kannst das Feld auch von Hand ausfüllen, Einträge getrennt durch `;`:
+
+```
+Living room shutter = shutter RTS 1; Desk lamp = switch CHACON 12; Hall = light X10 A3; Gate = button RTS 2 qualifier=1
+```
+
+| Typ       | Was er tut                                                                           |
+| --------- | ------------------------------------------------------------------------------------ |
+| `switch`  | Ein / aus.                                                                           |
+| `light`   | Ein / aus und Helligkeit (Protokolle mit Dimmbefehl: X10, Chacon-Dimmer, FS20…).     |
+| `shutter` | Öffnen / Stopp / Schließen. Bei Somfy RTS ist Stopp die Taste „my“.                  |
+| `button`  | Ein einzelner Befehl (Tor, Garagentor, Klingel). Ein RTS-Tor benötigt `qualifier=1`. |
+
+Die Adresse ist nicht die deiner alten Fernbedienung: Der Stick kombiniert sie mit
+seiner eigenen Kennung, sodass `ID 1` deines RFPlayer niemals ein Gerät eines
+Nachbarn steuert. Funkbefehle werden nie bestätigt: Gladys zeigt an, was es
+gesendet hat.
+
+## 5. Szenen und Dashboard (Gladys 5.1+)
+
+Auslöser:
+
+- **Eine Funkfernbedienung wird betätigt** — Filter auf die Fernbedienung und den
+  Befehl; Variablen: Name, Befehl, Protokoll, Adresse.
+- **Ein Funkmelder löst aus** — Alarm oder Sabotage.
+- **Batterie eines Funkgeräts schwach**.
+- **Funkstörung** — begonnen oder beendet. Ein Störsender ist der klassische Weg,
+  eine Funkalarmanlage blind zu machen: Baue darauf eine
+  Benachrichtigungsszene.
+
+Aktionen:
+
+- **Funkbefehl senden** — beliebiger Befehl an eine beliebige Adresse, auch eine
+  nicht angelegte (ein zweiter Kanal, das RTS-„my“…). Seine Ausgabe `sent` ist
+  false, wenn der Stick nicht verbunden ist.
+- **Funkstörung simulieren** — um deine Alarmszene von Anfang bis Ende zu testen.
+
+Das Widget **RFPlayer-Funk** zeigt, ob der Stick verbunden ist, den
+Störungszustand, die Zähler und die zuletzt empfangenen Sender, mit einem Badge,
+das angibt, ob jeder davon bereits ein Gerät in Gladys ist.
+
+## Fehlerbehebung
+
+- **„RFPlayer nicht erreichbar“**: Prüfe die Bridge (`systemctl status ser2net`),
+  die IP und den Port, und dass kein anderes Programm die serielle Schnittstelle
+  belegt (`kickolduser` hilft bei ser2net). Von einem anderen Rechner aus:
+  `nc 192.168.1.10 4000`, dann `ZIA++HELLO` + Eingabetaste eingeben: Der Stick
+  antwortet `ZIA--Welcome to Ziblue Dongle…`.
+- **Verbunden, dann jede Minute nicht erreichbar**: Der Port der Bridge ist offen,
+  aber der Stick antwortet nicht auf PING — ausgesteckt oder eine andere Baudrate.
+- **Eine Fernbedienung wird nicht erkannt**: Ist ihr Protokoll in „Empfangene
+  Protokolle“ ausgewählt? Ist die minimale Qualität zu hoch? Das Widget listet auf,
+  was empfangen wird, angelegt oder nicht.
+- **Ein Rollladen bewegt sich nicht**: Er muss einmal angelernt werden (Abschnitt
+  4). Bei RTS muss der Rollladen im Programmiermodus sein (PROG auf seiner
+  Fernbedienung gehalten), wenn der Anlern-Frame gesendet wird.
+- **Zu viele Geräte in Entdecken**: Erhöhe die minimale Funkqualität und
+  wähle die Protokolle ab, die du nicht nutzt.

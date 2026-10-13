@@ -4,7 +4,9 @@
   "name": "RFPlayer",
   "description": {
     "en": "Ziblue RFPlayer 433/868 MHz dongle: sensors, remotes, alarms and RF actuators.",
-    "fr": "Clé RFPlayer 433/868 MHz : capteurs, télécommandes, alarmes et actionneurs radio."
+    "fr": "Clé RFPlayer 433/868 MHz : capteurs, télécommandes, alarmes et actionneurs radio.",
+    "de": "Ziblue-RFPlayer-Stick 433/868 MHz: Sensoren, Fernbedienungen, Alarme und Funkaktoren.",
+    "es": "Llave RFPlayer de Ziblue 433/868 MHz: sensores, mandos, alarmas y actuadores de radio."
   },
   "version": "2.0.1",
   "docker_image": "ghcr.io/prohand/gladys-rfplayer:2.0.1",
@@ -18,25 +20,33 @@
       "type": "section",
       "label": {
         "en": "Getting started",
-        "fr": "Pour commencer"
+        "fr": "Pour commencer",
+        "de": "Erste Schritte",
+        "es": "Primeros pasos"
       },
       "description": {
         "en": "The integration runs in a sandboxed container that cannot open a USB port: plug the RFPlayer into a machine of your network and expose its serial port over TCP with ser2net (or socat, an ESP-Link…), at 115200 bauds. Then type that address below. The documentation gives a ready-to-use ser2net configuration.",
-        "fr": "L'intégration tourne dans un conteneur isolé qui ne peut pas ouvrir de port USB : branchez le RFPlayer sur une machine de votre réseau et exposez son port série en TCP avec ser2net (ou socat, un ESP-Link…), à 115200 bauds. Indiquez ensuite cette adresse ci-dessous. La documentation donne une configuration ser2net prête à l'emploi."
+        "fr": "L'intégration tourne dans un conteneur isolé qui ne peut pas ouvrir de port USB : branchez le RFPlayer sur une machine de votre réseau et exposez son port série en TCP avec ser2net (ou socat, un ESP-Link…), à 115200 bauds. Indiquez ensuite cette adresse ci-dessous. La documentation donne une configuration ser2net prête à l'emploi.",
+        "de": "Die Integration läuft in einem isolierten Container, der keinen USB-Port öffnen kann: Stecke den RFPlayer an einen Rechner in deinem Netzwerk und stelle seine serielle Schnittstelle mit ser2net (oder socat, einem ESP-Link…) über TCP bereit, mit 115200 Baud. Gib diese Adresse dann unten ein. Die Dokumentation enthält eine einsatzbereite ser2net-Konfiguration.",
+        "es": "La integración se ejecuta en un contenedor aislado que no puede abrir un puerto USB: conecte el RFPlayer a un equipo de su red y exponga su puerto serie por TCP con ser2net (o socat, un ESP-Link…), a 115200 baudios. Después indique esa dirección abajo. La documentación ofrece una configuración de ser2net lista para usar."
       },
       "links": [
         {
           "url": "https://github.com/prohand/gladys-rfplayer/blob/main/docs/en.md",
           "label": {
             "en": "Integration documentation",
-            "fr": "Documentation de l'intégration"
+            "fr": "Documentation de l'intégration",
+            "de": "Dokumentation der Integration",
+            "es": "Documentación de la integración"
           }
         },
         {
           "url": "https://github.com/cminyard/ser2net",
           "label": {
             "en": "ser2net",
-            "fr": "ser2net"
+            "fr": "ser2net",
+            "de": "ser2net",
+            "es": "ser2net"
           }
         }
       ]
@@ -46,15 +56,21 @@
       "type": "string",
       "label": {
         "en": "Bridge host",
-        "fr": "Hôte de la passerelle"
+        "fr": "Hôte de la passerelle",
+        "de": "Host der Bridge",
+        "es": "Host del puente"
       },
       "description": {
         "en": "IP address or name of the machine running the serial-to-TCP bridge. To reach the Gladys host itself, use its LAN IP (not localhost: the integration has its own network).",
-        "fr": "Adresse IP ou nom de la machine qui fait tourner la passerelle série-TCP. Pour joindre la machine de Gladys elle-même, utilisez son IP sur le réseau local (pas localhost : l'intégration a son propre réseau)."
+        "fr": "Adresse IP ou nom de la machine qui fait tourner la passerelle série-TCP. Pour joindre la machine de Gladys elle-même, utilisez son IP sur le réseau local (pas localhost : l'intégration a son propre réseau).",
+        "de": "IP-Adresse oder Name des Rechners, auf dem die Seriell-TCP-Bridge läuft. Für den Gladys-Rechner selbst verwendest du seine IP im lokalen Netzwerk (nicht localhost: Die Integration hat ihr eigenes Netzwerk).",
+        "es": "Dirección IP o nombre del equipo que ejecuta el puente serie-TCP. Para llegar al propio equipo de Gladys, use su IP de la red local (no localhost: la integración tiene su propia red)."
       },
       "placeholder": {
         "en": "e.g. 192.168.1.10",
-        "fr": "ex. 192.168.1.10"
+        "fr": "ex. 192.168.1.10",
+        "de": "z. B. 192.168.1.10",
+        "es": "p. ej. 192.168.1.10"
       },
       "required": true
     },
@@ -63,11 +79,15 @@
       "type": "number",
       "label": {
         "en": "Bridge TCP port",
-        "fr": "Port TCP de la passerelle"
+        "fr": "Port TCP de la passerelle",
+        "de": "TCP-Port der Bridge",
+        "es": "Puerto TCP del puente"
       },
       "description": {
         "en": "TCP port the bridge listens on (ser2net example: 4000).",
-        "fr": "Port TCP sur lequel écoute la passerelle (exemple ser2net : 4000)."
+        "fr": "Port TCP sur lequel écoute la passerelle (exemple ser2net : 4000).",
+        "de": "TCP-Port, auf dem die Bridge lauscht (ser2net-Beispiel: 4000).",
+        "es": "Puerto TCP en el que escucha el puente (ejemplo de ser2net: 4000)."
       },
       "required": false,
       "default": 4000,
@@ -79,11 +99,15 @@
       "type": "multi_select",
       "label": {
         "en": "Protocols received",
-        "fr": "Protocoles reçus"
+        "fr": "Protocoles reçus",
+        "de": "Empfangene Protokolle",
+        "es": "Protocolos recibidos"
       },
       "description": {
         "en": "Radio protocols the dongle decodes. Leave everything unticked to receive them all. Unticking the protocols you do not use reduces false detections and the neighbours heard.",
-        "fr": "Protocoles radio décodés par la clé. Ne cochez rien pour tous les recevoir. Décocher les protocoles inutilisés réduit les fausses détections et les voisins entendus."
+        "fr": "Protocoles radio décodés par la clé. Ne cochez rien pour tous les recevoir. Décocher les protocoles inutilisés réduit les fausses détections et les voisins entendus.",
+        "de": "Funkprotokolle, die der Stick dekodiert. Lass alles abgewählt, um alle zu empfangen. Das Abwählen nicht genutzter Protokolle verringert Fehlerkennungen und empfangene Nachbargeräte.",
+        "es": "Protocolos de radio que decodifica la llave. No marque ninguno para recibirlos todos. Desmarcar los protocolos que no usa reduce las falsas detecciones y los vecinos captados."
       },
       "required": false,
       "options": [
@@ -91,112 +115,144 @@
           "value": "X10",
           "label": {
             "en": "X10",
-            "fr": "X10"
+            "fr": "X10",
+            "de": "X10",
+            "es": "X10"
           }
         },
         {
           "value": "RTS",
           "label": {
             "en": "RTS",
-            "fr": "RTS"
+            "fr": "RTS",
+            "de": "RTS",
+            "es": "RTS"
           }
         },
         {
           "value": "VISONIC",
           "label": {
             "en": "VISONIC",
-            "fr": "VISONIC"
+            "fr": "VISONIC",
+            "de": "VISONIC",
+            "es": "VISONIC"
           }
         },
         {
           "value": "BLYSS",
           "label": {
             "en": "BLYSS",
-            "fr": "BLYSS"
+            "fr": "BLYSS",
+            "de": "BLYSS",
+            "es": "BLYSS"
           }
         },
         {
           "value": "CHACON",
           "label": {
             "en": "CHACON",
-            "fr": "CHACON"
+            "fr": "CHACON",
+            "de": "CHACON",
+            "es": "CHACON"
           }
         },
         {
           "value": "OREGONV1",
           "label": {
             "en": "OREGONV1",
-            "fr": "OREGONV1"
+            "fr": "OREGONV1",
+            "de": "OREGONV1",
+            "es": "OREGONV1"
           }
         },
         {
           "value": "OREGONV2",
           "label": {
             "en": "OREGONV2",
-            "fr": "OREGONV2"
+            "fr": "OREGONV2",
+            "de": "OREGONV2",
+            "es": "OREGONV2"
           }
         },
         {
           "value": "OREGONV3/OWL",
           "label": {
             "en": "OREGONV3/OWL",
-            "fr": "OREGONV3/OWL"
+            "fr": "OREGONV3/OWL",
+            "de": "OREGONV3/OWL",
+            "es": "OREGONV3/OWL"
           }
         },
         {
           "value": "DOMIA",
           "label": {
             "en": "DOMIA",
-            "fr": "DOMIA"
+            "fr": "DOMIA",
+            "de": "DOMIA",
+            "es": "DOMIA"
           }
         },
         {
           "value": "X2D",
           "label": {
             "en": "X2D",
-            "fr": "X2D"
+            "fr": "X2D",
+            "de": "X2D",
+            "es": "X2D"
           }
         },
         {
           "value": "KD101",
           "label": {
             "en": "KD101",
-            "fr": "KD101"
+            "fr": "KD101",
+            "de": "KD101",
+            "es": "KD101"
           }
         },
         {
           "value": "PARROT",
           "label": {
             "en": "PARROT",
-            "fr": "PARROT"
+            "fr": "PARROT",
+            "de": "PARROT",
+            "es": "PARROT"
           }
         },
         {
           "value": "TIC",
           "label": {
             "en": "TIC",
-            "fr": "TIC"
+            "fr": "TIC",
+            "de": "TIC",
+            "es": "TIC"
           }
         },
         {
           "value": "FS20",
           "label": {
             "en": "FS20",
-            "fr": "FS20"
+            "fr": "FS20",
+            "de": "FS20",
+            "es": "FS20"
           }
         },
         {
           "value": "JAMMING",
           "label": {
             "en": "JAMMING",
-            "fr": "JAMMING"
+            "fr": "JAMMING",
+            "de": "JAMMING",
+            "es": "JAMMING"
           }
         },
         {
           "value": "EDISIO",
           "label": {
             "en": "EDISIO",
-            "fr": "EDISIO"
+            "fr": "EDISIO",
+            "de": "EDISIO",
+            "es": "EDISIO"
           }
         }
       ]
@@ -206,11 +262,15 @@
       "type": "number",
       "label": {
         "en": "Minimum radio quality",
-        "fr": "Qualité radio minimale"
+        "fr": "Qualité radio minimale",
+        "de": "Minimale Funkqualität",
+        "es": "Calidad de radio mínima"
       },
       "description": {
         "en": "Frames heard with a quality below this value (1 to 10, as graded by the dongle) are ignored: raise it to 3 or 4 to stop picking up the neighbours. 0 keeps everything.",
-        "fr": "Les trames entendues avec une qualité inférieure (1 à 10, notée par la clé) sont ignorées : montez à 3 ou 4 pour ne plus capter les voisins. 0 garde tout."
+        "fr": "Les trames entendues avec une qualité inférieure (1 à 10, notée par la clé) sont ignorées : montez à 3 ou 4 pour ne plus capter les voisins. 0 garde tout.",
+        "de": "Empfangene Frames mit einer Qualität unter diesem Wert (1 bis 10, vom Stick bewertet) werden ignoriert: Erhöhe auf 3 oder 4, um die Nachbarn nicht mehr zu empfangen. 0 behält alles.",
+        "es": "Las tramas recibidas con una calidad inferior a este valor (1 a 10, según la llave) se ignoran: súbalo a 3 o 4 para dejar de captar a los vecinos. 0 lo conserva todo."
       },
       "required": false,
       "default": 0,
@@ -222,11 +282,15 @@
       "type": "number",
       "label": {
         "en": "Jamming detection threshold",
-        "fr": "Seuil de détection de brouillage"
+        "fr": "Seuil de détection de brouillage",
+        "de": "Schwelle der Störsendererkennung",
+        "es": "Umbral de detección de interferencias"
       },
       "description": {
         "en": "Sensitivity of the jamming detector built into the dongle: 1 is very sensitive (false alarms), 10 needs a jammer on both bands, 0 turns it off. The dongle default is 7.",
-        "fr": "Sensibilité du détecteur de brouillage intégré à la clé : 1 est très sensible (fausses alertes), 10 demande un brouilleur sur les deux bandes, 0 le désactive. La valeur par défaut de la clé est 7."
+        "fr": "Sensibilité du détecteur de brouillage intégré à la clé : 1 est très sensible (fausses alertes), 10 demande un brouilleur sur les deux bandes, 0 le désactive. La valeur par défaut de la clé est 7.",
+        "de": "Empfindlichkeit des im Stick eingebauten Störsenderdetektors: 1 ist sehr empfindlich (Fehlalarme), 10 erfordert einen Störsender auf beiden Bändern, 0 schaltet ihn aus. Der Standardwert des Sticks ist 7.",
+        "es": "Sensibilidad del detector de interferencias integrado en la llave: 1 es muy sensible (falsas alarmas), 10 necesita un inhibidor en ambas bandas, 0 lo desactiva. El valor por defecto de la llave es 7."
       },
       "required": false,
       "default": 7,
@@ -238,11 +302,15 @@
       "type": "select",
       "label": {
         "en": "Identify Oregon / OWL probes by",
-        "fr": "Identifier les sondes Oregon / OWL par"
+        "fr": "Identifier les sondes Oregon / OWL par",
+        "de": "Oregon-/OWL-Sonden erkennen über",
+        "es": "Identificar las sondas Oregon / OWL por"
       },
       "description": {
         "en": "Their random address changes at every battery change. \"Address\" tells apart two identical probes on the same channel, but creates a new device after a battery change. \"Model and channel\" survives battery changes, as long as each probe of a model has its own channel. Changing this creates new devices.",
-        "fr": "Leur adresse aléatoire change à chaque changement de piles. « Adresse » distingue deux sondes identiques sur le même canal, mais crée un nouvel appareil après un changement de piles. « Modèle et canal » survit aux changements de piles, tant que chaque sonde d'un modèle a son propre canal. Changer ce choix crée de nouveaux appareils."
+        "fr": "Leur adresse aléatoire change à chaque changement de piles. « Adresse » distingue deux sondes identiques sur le même canal, mais crée un nouvel appareil après un changement de piles. « Modèle et canal » survit aux changements de piles, tant que chaque sonde d'un modèle a son propre canal. Changer ce choix crée de nouveaux appareils.",
+        "de": "Ihre zufällige Adresse ändert sich bei jedem Batteriewechsel. „Adresse“ unterscheidet zwei identische Sonden auf demselben Kanal, erzeugt aber nach einem Batteriewechsel ein neues Gerät. „Modell und Kanal“ übersteht Batteriewechsel, solange jede Sonde eines Modells ihren eigenen Kanal hat. Eine Änderung erzeugt neue Geräte.",
+        "es": "Su dirección aleatoria cambia en cada cambio de pilas. «Dirección» distingue dos sondas idénticas en el mismo canal, pero crea un dispositivo nuevo tras un cambio de pilas. «Modelo y canal» sobrevive a los cambios de pilas, siempre que cada sonda de un modelo tenga su propio canal. Cambiar esta opción crea dispositivos nuevos."
       },
       "required": false,
       "default": "address",
@@ -251,14 +319,18 @@
           "value": "address",
           "label": {
             "en": "Address",
-            "fr": "Adresse"
+            "fr": "Adresse",
+            "de": "Adresse",
+            "es": "Dirección"
           }
         },
         {
           "value": "channel",
           "label": {
             "en": "Model and channel",
-            "fr": "Modèle et canal"
+            "fr": "Modèle et canal",
+            "de": "Modell und Kanal",
+            "es": "Modelo y canal"
           }
         }
       ]
@@ -268,15 +340,21 @@
       "type": "string",
       "label": {
         "en": "Actuators",
-        "fr": "Actionneurs"
+        "fr": "Actionneurs",
+        "de": "Aktoren",
+        "es": "Actuadores"
       },
       "description": {
         "en": "Receivers the dongle drives, separated by \";\": Name = kind PROTOCOL address. Kinds: switch, light, shutter, button. Address: 0 to 255, or A1 to P16. Options: qualifier=n, burst=n. The \"Pair an actuator\" button fills this field for you.",
-        "fr": "Récepteurs pilotés par la clé, séparés par « ; » : Nom = type PROTOCOLE adresse. Types : switch, light, shutter, button. Adresse : 0 à 255, ou A1 à P16. Options : qualifier=n, burst=n. Le bouton « Appairer un actionneur » remplit ce champ pour vous."
+        "fr": "Récepteurs pilotés par la clé, séparés par « ; » : Nom = type PROTOCOLE adresse. Types : switch, light, shutter, button. Adresse : 0 à 255, ou A1 à P16. Options : qualifier=n, burst=n. Le bouton « Appairer un actionneur » remplit ce champ pour vous.",
+        "de": "Vom Stick gesteuerte Empfänger, getrennt durch „;“: Name = Typ PROTOKOLL Adresse. Typen: switch, light, shutter, button. Adresse: 0 bis 255 oder A1 bis P16. Optionen: qualifier=n, burst=n. Die Schaltfläche „Aktor anlernen“ füllt dieses Feld für dich aus.",
+        "es": "Receptores que controla la llave, separados por «;»: Nombre = tipo PROTOCOLO dirección. Tipos: switch, light, shutter, button. Dirección: 0 a 255, o A1 a P16. Opciones: qualifier=n, burst=n. El botón «Emparejar un actuador» rellena este campo por usted."
       },
       "placeholder": {
         "en": "Living room shutter = shutter RTS 1; Desk lamp = switch CHACON 12",
-        "fr": "Volet salon = shutter RTS 1; Lampe bureau = switch CHACON 12"
+        "fr": "Volet salon = shutter RTS 1; Lampe bureau = switch CHACON 12",
+        "de": "Rollladen Wohnzimmer = shutter RTS 1; Schreibtischlampe = switch CHACON 12",
+        "es": "Persiana salón = shutter RTS 1; Lámpara escritorio = switch CHACON 12"
       },
       "required": false
     },
@@ -285,15 +363,21 @@
       "type": "string",
       "label": {
         "en": "Detector types",
-        "fr": "Types de détecteurs"
+        "fr": "Types de détecteurs",
+        "de": "Meldertypen",
+        "es": "Tipos de detectores"
       },
       "description": {
         "en": "On the air a door contact and a motion detector look the same. Tell which is which, separated by \";\": PROTOCOL id = kind (motion, opening, smoke, leak, vibration, presence). The id is shown in the widget. Unlisted detectors are motion detectors (smoke for KD101).",
-        "fr": "Sur les ondes, un contact de porte et un détecteur de mouvement se ressemblent. Précisez lequel est lequel, séparés par « ; » : PROTOCOLE id = type (motion, opening, smoke, leak, vibration, presence). L'id est affiché dans le widget. Les détecteurs non listés sont des détecteurs de mouvement (fumée pour KD101)."
+        "fr": "Sur les ondes, un contact de porte et un détecteur de mouvement se ressemblent. Précisez lequel est lequel, séparés par « ; » : PROTOCOLE id = type (motion, opening, smoke, leak, vibration, presence). L'id est affiché dans le widget. Les détecteurs non listés sont des détecteurs de mouvement (fumée pour KD101).",
+        "de": "Über Funk sehen ein Türkontakt und ein Bewegungsmelder gleich aus. Gib an, welcher welcher ist, getrennt durch „;“: PROTOKOLL id = Typ (motion, opening, smoke, leak, vibration, presence). Die id wird im Widget angezeigt. Nicht aufgeführte Melder sind Bewegungsmelder (Rauchmelder bei KD101).",
+        "es": "Por radio, un contacto de puerta y un detector de movimiento parecen iguales. Indique cuál es cuál, separados por «;»: PROTOCOLO id = tipo (motion, opening, smoke, leak, vibration, presence). El id se muestra en el widget. Los detectores no indicados son detectores de movimiento (humo para KD101)."
       },
       "placeholder": {
         "en": "VISONIC 1166992416 = opening",
-        "fr": "VISONIC 1166992416 = opening"
+        "fr": "VISONIC 1166992416 = opening",
+        "de": "VISONIC 1166992416 = opening",
+        "es": "VISONIC 1166992416 = opening"
       },
       "required": false
     }
@@ -303,7 +387,9 @@
       "key": "test_connection",
       "label": {
         "en": "Test the connection",
-        "fr": "Tester la connexion"
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
       },
       "timeout_seconds": 20
     },
@@ -311,7 +397,9 @@
       "key": "pair_actuator",
       "label": {
         "en": "Pair an actuator",
-        "fr": "Appairer un actionneur"
+        "fr": "Appairer un actionneur",
+        "de": "Aktor anlernen",
+        "es": "Emparejar un actuador"
       },
       "timeout_seconds": 20,
       "fields": [
@@ -320,11 +408,15 @@
           "type": "section",
           "label": {
             "en": "Declare and pair a receiver",
-            "fr": "Déclarer et appairer un récepteur"
+            "fr": "Déclarer et appairer un récepteur",
+            "de": "Empfänger anlegen und anlernen",
+            "es": "Declarar y emparejar un receptor"
           },
           "description": {
             "en": "Put the receiver in learning mode first (button pressed on a Chacon plug, PROG held on the remote of a Somfy RTS shutter…), then run this action: the dongle sends the pairing frame and the receiver is added to the Actuators field.",
-            "fr": "Mettez d'abord le récepteur en mode apprentissage (bouton appuyé sur une prise Chacon, PROG maintenu sur la télécommande d'un volet Somfy RTS…), puis lancez cette action : la clé envoie la trame d'appairage et le récepteur est ajouté au champ Actionneurs."
+            "fr": "Mettez d'abord le récepteur en mode apprentissage (bouton appuyé sur une prise Chacon, PROG maintenu sur la télécommande d'un volet Somfy RTS…), puis lancez cette action : la clé envoie la trame d'appairage et le récepteur est ajouté au champ Actionneurs.",
+            "de": "Versetze den Empfänger zuerst in den Lernmodus (Taste an einer Chacon-Steckdose gedrückt, PROG an der Fernbedienung eines Somfy-RTS-Rollladens gehalten…) und führe dann diese Aktion aus: Der Stick sendet den Anlern-Frame und der Empfänger wird dem Feld Aktoren hinzugefügt.",
+            "es": "Ponga primero el receptor en modo aprendizaje (botón pulsado en un enchufe Chacon, PROG mantenido en el mando de una persiana Somfy RTS…) y después ejecute esta acción: la llave envía la trama de emparejamiento y el receptor se añade al campo Actuadores."
           }
         },
         {
@@ -332,11 +424,15 @@
           "type": "string",
           "label": {
             "en": "Name",
-            "fr": "Nom"
+            "fr": "Nom",
+            "de": "Name",
+            "es": "Nombre"
           },
           "placeholder": {
             "en": "Living room shutter",
-            "fr": "Volet salon"
+            "fr": "Volet salon",
+            "de": "Rollladen Wohnzimmer",
+            "es": "Persiana salón"
           },
           "required": true
         },
@@ -345,7 +441,9 @@
           "type": "select",
           "label": {
             "en": "Kind",
-            "fr": "Type"
+            "fr": "Type",
+            "de": "Typ",
+            "es": "Tipo"
           },
           "required": true,
           "default": "switch",
@@ -354,28 +452,36 @@
               "value": "switch",
               "label": {
                 "en": "Switch / plug",
-                "fr": "Interrupteur / prise"
+                "fr": "Interrupteur / prise",
+                "de": "Schalter / Steckdose",
+                "es": "Interruptor / enchufe"
               }
             },
             {
               "value": "light",
               "label": {
                 "en": "Dimmable light",
-                "fr": "Lampe variable"
+                "fr": "Lampe variable",
+                "de": "Dimmbare Lampe",
+                "es": "Luz regulable"
               }
             },
             {
               "value": "shutter",
               "label": {
                 "en": "Shutter",
-                "fr": "Volet"
+                "fr": "Volet",
+                "de": "Rollladen",
+                "es": "Persiana"
               }
             },
             {
               "value": "button",
               "label": {
                 "en": "Button (gate, bell)",
-                "fr": "Bouton (portail, sonnette)"
+                "fr": "Bouton (portail, sonnette)",
+                "de": "Taster (Tor, Klingel)",
+                "es": "Botón (portón, timbre)"
               }
             }
           ]
@@ -385,7 +491,9 @@
           "type": "select",
           "label": {
             "en": "Protocol",
-            "fr": "Protocole"
+            "fr": "Protocole",
+            "de": "Protokoll",
+            "es": "Protocolo"
           },
           "required": true,
           "default": "CHACON",
@@ -394,112 +502,144 @@
               "value": "X10",
               "label": {
                 "en": "X10",
-                "fr": "X10"
+                "fr": "X10",
+                "de": "X10",
+                "es": "X10"
               }
             },
             {
               "value": "CHACON",
               "label": {
                 "en": "CHACON",
-                "fr": "CHACON"
+                "fr": "CHACON",
+                "de": "CHACON",
+                "es": "CHACON"
               }
             },
             {
               "value": "DOMIA",
               "label": {
                 "en": "DOMIA",
-                "fr": "DOMIA"
+                "fr": "DOMIA",
+                "de": "DOMIA",
+                "es": "DOMIA"
               }
             },
             {
               "value": "BLYSS",
               "label": {
                 "en": "BLYSS",
-                "fr": "BLYSS"
+                "fr": "BLYSS",
+                "de": "BLYSS",
+                "es": "BLYSS"
               }
             },
             {
               "value": "RTS",
               "label": {
                 "en": "RTS",
-                "fr": "RTS"
+                "fr": "RTS",
+                "de": "RTS",
+                "es": "RTS"
               }
             },
             {
               "value": "VISONIC433",
               "label": {
                 "en": "VISONIC433",
-                "fr": "VISONIC433"
+                "fr": "VISONIC433",
+                "de": "VISONIC433",
+                "es": "VISONIC433"
               }
             },
             {
               "value": "VISONIC868",
               "label": {
                 "en": "VISONIC868",
-                "fr": "VISONIC868"
+                "fr": "VISONIC868",
+                "de": "VISONIC868",
+                "es": "VISONIC868"
               }
             },
             {
               "value": "X2D433",
               "label": {
                 "en": "X2D433",
-                "fr": "X2D433"
+                "fr": "X2D433",
+                "de": "X2D433",
+                "es": "X2D433"
               }
             },
             {
               "value": "X2D868",
               "label": {
                 "en": "X2D868",
-                "fr": "X2D868"
+                "fr": "X2D868",
+                "de": "X2D868",
+                "es": "X2D868"
               }
             },
             {
               "value": "X2DSHUTTER",
               "label": {
                 "en": "X2DSHUTTER",
-                "fr": "X2DSHUTTER"
+                "fr": "X2DSHUTTER",
+                "de": "X2DSHUTTER",
+                "es": "X2DSHUTTER"
               }
             },
             {
               "value": "X2DELEC",
               "label": {
                 "en": "X2DELEC",
-                "fr": "X2DELEC"
+                "fr": "X2DELEC",
+                "de": "X2DELEC",
+                "es": "X2DELEC"
               }
             },
             {
               "value": "X2DGAS",
               "label": {
                 "en": "X2DGAS",
-                "fr": "X2DGAS"
+                "fr": "X2DGAS",
+                "de": "X2DGAS",
+                "es": "X2DGAS"
               }
             },
             {
               "value": "PARROT",
               "label": {
                 "en": "PARROT",
-                "fr": "PARROT"
+                "fr": "PARROT",
+                "de": "PARROT",
+                "es": "PARROT"
               }
             },
             {
               "value": "KD101",
               "label": {
                 "en": "KD101",
-                "fr": "KD101"
+                "fr": "KD101",
+                "de": "KD101",
+                "es": "KD101"
               }
             },
             {
               "value": "FS20",
               "label": {
                 "en": "FS20",
-                "fr": "FS20"
+                "fr": "FS20",
+                "de": "FS20",
+                "es": "FS20"
               }
             },
             {
               "value": "EDISIO",
               "label": {
                 "en": "EDISIO",
-                "fr": "EDISIO"
+                "fr": "EDISIO",
+                "de": "EDISIO",
+                "es": "EDISIO"
               }
             }
           ]
@@ -509,15 +649,21 @@
           "type": "string",
           "label": {
             "en": "Address",
-            "fr": "Adresse"
+            "fr": "Adresse",
+            "de": "Adresse",
+            "es": "Dirección"
           },
           "description": {
             "en": "A free number from 0 to 255 (or A1 to P16), not used by another actuator of the same protocol.",
-            "fr": "Un numéro libre de 0 à 255 (ou A1 à P16), non utilisé par un autre actionneur du même protocole."
+            "fr": "Un numéro libre de 0 à 255 (ou A1 à P16), non utilisé par un autre actionneur du même protocole.",
+            "de": "Eine freie Nummer von 0 bis 255 (oder A1 bis P16), die kein anderer Aktor desselben Protokolls verwendet.",
+            "es": "Un número libre de 0 a 255 (o A1 a P16), que no use otro actuador del mismo protocolo."
           },
           "placeholder": {
             "en": "e.g. 1",
-            "fr": "ex. 1"
+            "fr": "ex. 1",
+            "de": "z. B. 1",
+            "es": "p. ej. 1"
           },
           "required": true
         },
@@ -526,11 +672,15 @@
           "type": "number",
           "label": {
             "en": "Qualifier (optional)",
-            "fr": "Qualifier (optionnel)"
+            "fr": "Qualifier (optionnel)",
+            "de": "Qualifier (optional)",
+            "es": "Qualifier (opcional)"
           },
           "description": {
             "en": "Protocol option. Somfy RTS: 1 for a gate, empty for a shutter.",
-            "fr": "Option du protocole. Somfy RTS : 1 pour un portail, vide pour un volet."
+            "fr": "Option du protocole. Somfy RTS : 1 pour un portail, vide pour un volet.",
+            "de": "Protokolloption. Somfy RTS: 1 für ein Tor, leer für einen Rollladen.",
+            "es": "Opción del protocolo. Somfy RTS: 1 para un portón, vacío para una persiana."
           },
           "required": false,
           "min": 0,
@@ -541,11 +691,15 @@
           "type": "boolean",
           "label": {
             "en": "Send the pairing frame",
-            "fr": "Envoyer la trame d'appairage"
+            "fr": "Envoyer la trame d'appairage",
+            "de": "Anlern-Frame senden",
+            "es": "Enviar la trama de emparejamiento"
           },
           "description": {
             "en": "Untick to only declare a receiver already paired (or an X10 module).",
-            "fr": "Décochez pour seulement déclarer un récepteur déjà appairé (ou un module X10)."
+            "fr": "Décochez pour seulement déclarer un récepteur déjà appairé (ou un module X10).",
+            "de": "Abwählen, um nur einen bereits angelernten Empfänger (oder ein X10-Modul) anzulegen.",
+            "es": "Desmarque para solo declarar un receptor ya emparejado (o un módulo X10)."
           },
           "required": false,
           "default": true
@@ -556,7 +710,9 @@
       "key": "simulate_jamming",
       "label": {
         "en": "Simulate a jamming",
-        "fr": "Simuler un brouillage"
+        "fr": "Simuler un brouillage",
+        "de": "Störung simulieren",
+        "es": "Simular una interferencia"
       },
       "timeout_seconds": 10,
       "fields": [
@@ -565,11 +721,15 @@
           "type": "number",
           "label": {
             "en": "Delay (s)",
-            "fr": "Délai (s)"
+            "fr": "Délai (s)",
+            "de": "Verzögerung (s)",
+            "es": "Retardo (s)"
           },
           "description": {
             "en": "Seconds before the dongle reports the jamming (0 to 255).",
-            "fr": "Secondes avant que la clé signale le brouillage (0 à 255)."
+            "fr": "Secondes avant que la clé signale le brouillage (0 à 255).",
+            "de": "Sekunden, bevor der Stick die Störung meldet (0 bis 255).",
+            "es": "Segundos antes de que la llave notifique la interferencia (0 a 255)."
           },
           "required": false,
           "default": 0,
@@ -584,11 +744,15 @@
       "key": "rfplayer",
       "label": {
         "en": "RFPlayer radio",
-        "fr": "Radio RFPlayer"
+        "fr": "Radio RFPlayer",
+        "de": "RFPlayer-Funk",
+        "es": "Radio RFPlayer"
       },
       "description": {
         "en": "Dongle status, jamming and the last emitters heard.",
-        "fr": "État de la clé, brouillage et derniers émetteurs entendus."
+        "fr": "État de la clé, brouillage et derniers émetteurs entendus.",
+        "de": "Status des Sticks, Störungen und die zuletzt empfangenen Sender.",
+        "es": "Estado de la llave, interferencias y los últimos emisores recibidos."
       },
       "icon": "radio",
       "settings": [
@@ -597,11 +761,15 @@
           "type": "number",
           "label": {
             "en": "Emitters shown",
-            "fr": "Émetteurs affichés"
+            "fr": "Émetteurs affichés",
+            "de": "Angezeigte Sender",
+            "es": "Emisores mostrados"
           },
           "description": {
             "en": "How many of the last emitters heard are listed (0 to 8).",
-            "fr": "Nombre de derniers émetteurs entendus à lister (0 à 8)."
+            "fr": "Nombre de derniers émetteurs entendus à lister (0 à 8).",
+            "de": "Wie viele der zuletzt empfangenen Sender aufgelistet werden (0 bis 8).",
+            "es": "Cuántos de los últimos emisores recibidos se listan (0 a 8)."
           },
           "required": false,
           "default": 5,
@@ -617,11 +785,15 @@
       "key": "remote_pressed",
       "label": {
         "en": "A radio remote is pressed",
-        "fr": "Une télécommande radio est actionnée"
+        "fr": "Une télécommande radio est actionnée",
+        "de": "Eine Funkfernbedienung wird betätigt",
+        "es": "Se pulsa un mando de radio"
       },
       "description": {
         "en": "A remote, wall switch or keyfob created as a device in Gladys was heard.",
-        "fr": "Une télécommande, un interrupteur mural ou un porte-clés créé comme appareil dans Gladys a été entendu."
+        "fr": "Une télécommande, un interrupteur mural ou un porte-clés créé comme appareil dans Gladys a été entendu.",
+        "de": "Eine Fernbedienung, ein Wandschalter oder ein Handsender, der als Gerät in Gladys angelegt ist, wurde empfangen.",
+        "es": "Se ha recibido un mando, un interruptor de pared o un llavero creado como dispositivo en Gladys."
       },
       "fields": [
         {
@@ -630,7 +802,9 @@
           "source": "devices",
           "label": {
             "en": "Remote",
-            "fr": "Télécommande"
+            "fr": "Télécommande",
+            "de": "Fernbedienung",
+            "es": "Mando"
           },
           "required": false
         },
@@ -639,119 +813,153 @@
           "type": "multi_select",
           "label": {
             "en": "Order",
-            "fr": "Ordre"
+            "fr": "Ordre",
+            "de": "Befehl",
+            "es": "Orden"
           },
           "options": [
             {
               "value": "on",
               "label": {
                 "en": "On",
-                "fr": "Allumer"
+                "fr": "Allumer",
+                "de": "Ein",
+                "es": "Encender"
               }
             },
             {
               "value": "off",
               "label": {
                 "en": "Off",
-                "fr": "Éteindre"
+                "fr": "Éteindre",
+                "de": "Aus",
+                "es": "Apagar"
               }
             },
             {
               "value": "all_on",
               "label": {
                 "en": "All on",
-                "fr": "Tout allumer"
+                "fr": "Tout allumer",
+                "de": "Alle ein",
+                "es": "Encender todo"
               }
             },
             {
               "value": "all_off",
               "label": {
                 "en": "All off",
-                "fr": "Tout éteindre"
+                "fr": "Tout éteindre",
+                "de": "Alle aus",
+                "es": "Apagar todo"
               }
             },
             {
               "value": "dim",
               "label": {
                 "en": "Dim",
-                "fr": "Varier"
+                "fr": "Varier",
+                "de": "Dimmen",
+                "es": "Atenuar"
               }
             },
             {
               "value": "bright",
               "label": {
                 "en": "Bright",
-                "fr": "Plus fort"
+                "fr": "Plus fort",
+                "de": "Heller",
+                "es": "Más brillo"
               }
             },
             {
               "value": "up",
               "label": {
                 "en": "Up",
-                "fr": "Monter"
+                "fr": "Monter",
+                "de": "Hoch",
+                "es": "Subir"
               }
             },
             {
               "value": "down",
               "label": {
                 "en": "Down",
-                "fr": "Descendre"
+                "fr": "Descendre",
+                "de": "Runter",
+                "es": "Bajar"
               }
             },
             {
               "value": "my",
               "label": {
                 "en": "My (Somfy)",
-                "fr": "My (Somfy)"
+                "fr": "My (Somfy)",
+                "de": "My (Somfy)",
+                "es": "My (Somfy)"
               }
             },
             {
               "value": "stop",
               "label": {
                 "en": "Stop",
-                "fr": "Stop"
+                "fr": "Stop",
+                "de": "Stopp",
+                "es": "Parar"
               }
             },
             {
               "value": "left",
               "label": {
                 "en": "Left button (gate)",
-                "fr": "Bouton gauche (portail)"
+                "fr": "Bouton gauche (portail)",
+                "de": "Linke Taste (Tor)",
+                "es": "Botón izquierdo (portón)"
               }
             },
             {
               "value": "right",
               "label": {
                 "en": "Right button (gate)",
-                "fr": "Bouton droit (portail)"
+                "fr": "Bouton droit (portail)",
+                "de": "Rechte Taste (Tor)",
+                "es": "Botón derecho (portón)"
               }
             },
             {
               "value": "key_1",
               "label": {
                 "en": "Key 1",
-                "fr": "Touche 1"
+                "fr": "Touche 1",
+                "de": "Taste 1",
+                "es": "Tecla 1"
               }
             },
             {
               "value": "key_2",
               "label": {
                 "en": "Key 2",
-                "fr": "Touche 2"
+                "fr": "Touche 2",
+                "de": "Taste 2",
+                "es": "Tecla 2"
               }
             },
             {
               "value": "key_3",
               "label": {
                 "en": "Key 3",
-                "fr": "Touche 3"
+                "fr": "Touche 3",
+                "de": "Taste 3",
+                "es": "Tecla 3"
               }
             },
             {
               "value": "key_4",
               "label": {
                 "en": "Key 4",
-                "fr": "Touche 4"
+                "fr": "Touche 4",
+                "de": "Taste 4",
+                "es": "Tecla 4"
               }
             }
           ]
@@ -763,7 +971,9 @@
           "type": "string",
           "label": {
             "en": "Remote name",
-            "fr": "Nom de la télécommande"
+            "fr": "Nom de la télécommande",
+            "de": "Name der Fernbedienung",
+            "es": "Nombre del mando"
           }
         },
         {
@@ -771,7 +981,9 @@
           "type": "string",
           "label": {
             "en": "Order",
-            "fr": "Ordre"
+            "fr": "Ordre",
+            "de": "Befehl",
+            "es": "Orden"
           }
         },
         {
@@ -779,7 +991,9 @@
           "type": "string",
           "label": {
             "en": "Protocol",
-            "fr": "Protocole"
+            "fr": "Protocole",
+            "de": "Protokoll",
+            "es": "Protocolo"
           }
         },
         {
@@ -787,7 +1001,9 @@
           "type": "string",
           "label": {
             "en": "Address",
-            "fr": "Adresse"
+            "fr": "Adresse",
+            "de": "Adresse",
+            "es": "Dirección"
           }
         }
       ]
@@ -796,11 +1012,15 @@
       "key": "alarm_detected",
       "label": {
         "en": "A radio detector is triggered",
-        "fr": "Un détecteur radio se déclenche"
+        "fr": "Un détecteur radio se déclenche",
+        "de": "Ein Funkmelder löst aus",
+        "es": "Se dispara un detector de radio"
       },
       "description": {
         "en": "Alarm or tamper of a Visonic, X2D or KD101 detector created in Gladys.",
-        "fr": "Alarme ou autoprotection d'un détecteur Visonic, X2D ou KD101 créé dans Gladys."
+        "fr": "Alarme ou autoprotection d'un détecteur Visonic, X2D ou KD101 créé dans Gladys.",
+        "de": "Alarm oder Sabotage eines in Gladys angelegten Visonic-, X2D- oder KD101-Melders.",
+        "es": "Alarma o sabotaje de un detector Visonic, X2D o KD101 creado en Gladys."
       },
       "fields": [
         {
@@ -809,7 +1029,9 @@
           "source": "devices",
           "label": {
             "en": "Detector",
-            "fr": "Détecteur"
+            "fr": "Détecteur",
+            "de": "Melder",
+            "es": "Detector"
           },
           "required": false
         },
@@ -818,21 +1040,27 @@
           "type": "multi_select",
           "label": {
             "en": "Event",
-            "fr": "Événement"
+            "fr": "Événement",
+            "de": "Ereignis",
+            "es": "Evento"
           },
           "options": [
             {
               "value": "alarm",
               "label": {
                 "en": "Alarm",
-                "fr": "Alarme"
+                "fr": "Alarme",
+                "de": "Alarm",
+                "es": "Alarma"
               }
             },
             {
               "value": "tamper",
               "label": {
                 "en": "Tamper",
-                "fr": "Autoprotection"
+                "fr": "Autoprotection",
+                "de": "Sabotage",
+                "es": "Sabotaje"
               }
             }
           ]
@@ -844,7 +1072,9 @@
           "type": "string",
           "label": {
             "en": "Detector name",
-            "fr": "Nom du détecteur"
+            "fr": "Nom du détecteur",
+            "de": "Name des Melders",
+            "es": "Nombre del detector"
           }
         },
         {
@@ -852,7 +1082,9 @@
           "type": "string",
           "label": {
             "en": "Event",
-            "fr": "Événement"
+            "fr": "Événement",
+            "de": "Ereignis",
+            "es": "Evento"
           }
         },
         {
@@ -860,7 +1092,9 @@
           "type": "string",
           "label": {
             "en": "Protocol",
-            "fr": "Protocole"
+            "fr": "Protocole",
+            "de": "Protokoll",
+            "es": "Protocolo"
           }
         },
         {
@@ -868,7 +1102,9 @@
           "type": "string",
           "label": {
             "en": "Address",
-            "fr": "Adresse"
+            "fr": "Adresse",
+            "de": "Adresse",
+            "es": "Dirección"
           }
         }
       ]
@@ -877,11 +1113,15 @@
       "key": "battery_low",
       "label": {
         "en": "A radio device battery is low",
-        "fr": "La pile d'un appareil radio est faible"
+        "fr": "La pile d'un appareil radio est faible",
+        "de": "Batterie eines Funkgeräts schwach",
+        "es": "Pila baja en un dispositivo de radio"
       },
       "description": {
         "en": "A sensor or detector created in Gladys reported a low battery.",
-        "fr": "Un capteur ou détecteur créé dans Gladys a signalé une pile faible."
+        "fr": "Un capteur ou détecteur créé dans Gladys a signalé une pile faible.",
+        "de": "Ein in Gladys angelegter Sensor oder Melder hat eine schwache Batterie gemeldet.",
+        "es": "Un sensor o detector creado en Gladys ha notificado una pila baja."
       },
       "fields": [
         {
@@ -890,7 +1130,9 @@
           "source": "devices",
           "label": {
             "en": "Device",
-            "fr": "Appareil"
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
           },
           "required": false
         }
@@ -901,7 +1143,9 @@
           "type": "string",
           "label": {
             "en": "Device name",
-            "fr": "Nom de l'appareil"
+            "fr": "Nom de l'appareil",
+            "de": "Gerätename",
+            "es": "Nombre del dispositivo"
           }
         }
       ]
@@ -910,11 +1154,15 @@
       "key": "jamming",
       "label": {
         "en": "Radio jamming",
-        "fr": "Brouillage radio"
+        "fr": "Brouillage radio",
+        "de": "Funkstörung",
+        "es": "Interferencia de radio"
       },
       "description": {
         "en": "The dongle detected a jammer, or the jamming stopped.",
-        "fr": "La clé a détecté un brouilleur, ou le brouillage a cessé."
+        "fr": "La clé a détecté un brouilleur, ou le brouillage a cessé.",
+        "de": "Der Stick hat einen Störsender erkannt, oder die Störung hat aufgehört.",
+        "es": "La llave ha detectado un inhibidor, o la interferencia ha cesado."
       },
       "fields": [
         {
@@ -922,21 +1170,27 @@
           "type": "select",
           "label": {
             "en": "Jamming",
-            "fr": "Brouillage"
+            "fr": "Brouillage",
+            "de": "Störung",
+            "es": "Interferencia"
           },
           "options": [
             {
               "value": "started",
               "label": {
                 "en": "Started",
-                "fr": "Commencé"
+                "fr": "Commencé",
+                "de": "Begonnen",
+                "es": "Iniciada"
               }
             },
             {
               "value": "stopped",
               "label": {
                 "en": "Stopped",
-                "fr": "Terminé"
+                "fr": "Terminé",
+                "de": "Beendet",
+                "es": "Terminada"
               }
             }
           ]
@@ -948,7 +1202,9 @@
           "type": "string",
           "label": {
             "en": "State",
-            "fr": "État"
+            "fr": "État",
+            "de": "Zustand",
+            "es": "Estado"
           }
         }
       ]
@@ -959,11 +1215,15 @@
       "key": "send_order",
       "label": {
         "en": "Send a radio order",
-        "fr": "Envoyer un ordre radio"
+        "fr": "Envoyer un ordre radio",
+        "de": "Funkbefehl senden",
+        "es": "Enviar una orden de radio"
       },
       "description": {
         "en": "Any order to any address, even one not declared as an actuator.",
-        "fr": "N'importe quel ordre à n'importe quelle adresse, même non déclarée comme actionneur."
+        "fr": "N'importe quel ordre à n'importe quelle adresse, même non déclarée comme actionneur.",
+        "de": "Beliebiger Befehl an eine beliebige Adresse, auch eine nicht als Aktor angelegte.",
+        "es": "Cualquier orden a cualquier dirección, incluso una no declarada como actuador."
       },
       "timeout_seconds": 15,
       "fields": [
@@ -972,7 +1232,9 @@
           "type": "select",
           "label": {
             "en": "Protocol",
-            "fr": "Protocole"
+            "fr": "Protocole",
+            "de": "Protokoll",
+            "es": "Protocolo"
           },
           "required": true,
           "options": [
@@ -980,112 +1242,144 @@
               "value": "X10",
               "label": {
                 "en": "X10",
-                "fr": "X10"
+                "fr": "X10",
+                "de": "X10",
+                "es": "X10"
               }
             },
             {
               "value": "CHACON",
               "label": {
                 "en": "CHACON",
-                "fr": "CHACON"
+                "fr": "CHACON",
+                "de": "CHACON",
+                "es": "CHACON"
               }
             },
             {
               "value": "DOMIA",
               "label": {
                 "en": "DOMIA",
-                "fr": "DOMIA"
+                "fr": "DOMIA",
+                "de": "DOMIA",
+                "es": "DOMIA"
               }
             },
             {
               "value": "BLYSS",
               "label": {
                 "en": "BLYSS",
-                "fr": "BLYSS"
+                "fr": "BLYSS",
+                "de": "BLYSS",
+                "es": "BLYSS"
               }
             },
             {
               "value": "RTS",
               "label": {
                 "en": "RTS",
-                "fr": "RTS"
+                "fr": "RTS",
+                "de": "RTS",
+                "es": "RTS"
               }
             },
             {
               "value": "VISONIC433",
               "label": {
                 "en": "VISONIC433",
-                "fr": "VISONIC433"
+                "fr": "VISONIC433",
+                "de": "VISONIC433",
+                "es": "VISONIC433"
               }
             },
             {
               "value": "VISONIC868",
               "label": {
                 "en": "VISONIC868",
-                "fr": "VISONIC868"
+                "fr": "VISONIC868",
+                "de": "VISONIC868",
+                "es": "VISONIC868"
               }
             },
             {
               "value": "X2D433",
               "label": {
                 "en": "X2D433",
-                "fr": "X2D433"
+                "fr": "X2D433",
+                "de": "X2D433",
+                "es": "X2D433"
               }
             },
             {
               "value": "X2D868",
               "label": {
                 "en": "X2D868",
-                "fr": "X2D868"
+                "fr": "X2D868",
+                "de": "X2D868",
+                "es": "X2D868"
               }
             },
             {
               "value": "X2DSHUTTER",
               "label": {
                 "en": "X2DSHUTTER",
-                "fr": "X2DSHUTTER"
+                "fr": "X2DSHUTTER",
+                "de": "X2DSHUTTER",
+                "es": "X2DSHUTTER"
               }
             },
             {
               "value": "X2DELEC",
               "label": {
                 "en": "X2DELEC",
-                "fr": "X2DELEC"
+                "fr": "X2DELEC",
+                "de": "X2DELEC",
+                "es": "X2DELEC"
               }
             },
             {
               "value": "X2DGAS",
               "label": {
                 "en": "X2DGAS",
-                "fr": "X2DGAS"
+                "fr": "X2DGAS",
+                "de": "X2DGAS",
+                "es": "X2DGAS"
               }
             },
             {
               "value": "PARROT",
               "label": {
                 "en": "PARROT",
-                "fr": "PARROT"
+                "fr": "PARROT",
+                "de": "PARROT",
+                "es": "PARROT"
               }
             },
             {
               "value": "KD101",
               "label": {
                 "en": "KD101",
-                "fr": "KD101"
+                "fr": "KD101",
+                "de": "KD101",
+                "es": "KD101"
               }
             },
             {
               "value": "FS20",
               "label": {
                 "en": "FS20",
-                "fr": "FS20"
+                "fr": "FS20",
+                "de": "FS20",
+                "es": "FS20"
               }
             },
             {
               "value": "EDISIO",
               "label": {
                 "en": "EDISIO",
-                "fr": "EDISIO"
+                "fr": "EDISIO",
+                "de": "EDISIO",
+                "es": "EDISIO"
               }
             }
           ]
@@ -1095,11 +1389,15 @@
           "type": "string",
           "label": {
             "en": "Address",
-            "fr": "Adresse"
+            "fr": "Adresse",
+            "de": "Adresse",
+            "es": "Dirección"
           },
           "placeholder": {
             "en": "0 to 255, or A1 to P16",
-            "fr": "0 à 255, ou A1 à P16"
+            "fr": "0 à 255, ou A1 à P16",
+            "de": "0 bis 255 oder A1 bis P16",
+            "es": "0 a 255, o A1 a P16"
           },
           "required": true
         },
@@ -1108,7 +1406,9 @@
           "type": "select",
           "label": {
             "en": "Order",
-            "fr": "Ordre"
+            "fr": "Ordre",
+            "de": "Befehl",
+            "es": "Orden"
           },
           "required": true,
           "options": [
@@ -1116,49 +1416,63 @@
               "value": "on",
               "label": {
                 "en": "On / up",
-                "fr": "Allumer / monter"
+                "fr": "Allumer / monter",
+                "de": "Ein / hoch",
+                "es": "Encender / subir"
               }
             },
             {
               "value": "off",
               "label": {
                 "en": "Off / down",
-                "fr": "Éteindre / descendre"
+                "fr": "Éteindre / descendre",
+                "de": "Aus / runter",
+                "es": "Apagar / bajar"
               }
             },
             {
               "value": "dim",
               "label": {
                 "en": "Dim to level",
-                "fr": "Varier au niveau"
+                "fr": "Varier au niveau",
+                "de": "Auf Stufe dimmen",
+                "es": "Atenuar al nivel"
               }
             },
             {
               "value": "my",
               "label": {
                 "en": "My (Somfy RTS)",
-                "fr": "My (Somfy RTS)"
+                "fr": "My (Somfy RTS)",
+                "de": "My (Somfy RTS)",
+                "es": "My (Somfy RTS)"
               }
             },
             {
               "value": "toggle",
               "label": {
                 "en": "Toggle (Edisio)",
-                "fr": "Inverser (Edisio)"
+                "fr": "Inverser (Edisio)",
+                "de": "Umschalten (Edisio)",
+                "es": "Alternar (Edisio)"
               }
             },
             {
               "value": "assoc",
               "label": {
                 "en": "Pair",
-                "fr": "Appairer"
+                "fr": "Appairer",
+                "de": "Anlernen",
+                "es": "Emparejar"
               }
             },
             {
               "value": "dissoc",
               "label": {
                 "en": "Unpair",
-                "fr": "Désappairer"
+                "fr": "Désappairer",
+                "de": "Ablernen",
+                "es": "Desemparejar"
               }
             }
           ]
@@ -1168,7 +1482,9 @@
           "type": "number",
           "label": {
             "en": "Level (%)",
-            "fr": "Niveau (%)"
+            "fr": "Niveau (%)",
+            "de": "Stufe (%)",
+            "es": "Nivel (%)"
           },
           "required": false,
           "default": 50,
@@ -1180,7 +1496,9 @@
           "type": "number",
           "label": {
             "en": "Qualifier (optional)",
-            "fr": "Qualifier (optionnel)"
+            "fr": "Qualifier (optionnel)",
+            "de": "Qualifier (optional)",
+            "es": "Qualifier (opcional)"
           },
           "required": false,
           "min": 0,
@@ -1193,7 +1511,9 @@
           "type": "boolean",
           "label": {
             "en": "Order sent",
-            "fr": "Ordre envoyé"
+            "fr": "Ordre envoyé",
+            "de": "Befehl gesendet",
+            "es": "Orden enviada"
           }
         },
         {
@@ -1201,7 +1521,9 @@
           "type": "string",
           "label": {
             "en": "Command",
-            "fr": "Commande"
+            "fr": "Commande",
+            "de": "Befehl",
+            "es": "Comando"
           }
         }
       ]
@@ -1210,11 +1532,15 @@
       "key": "simulate_jamming",
       "label": {
         "en": "Simulate a radio jamming",
-        "fr": "Simuler un brouillage radio"
+        "fr": "Simuler un brouillage radio",
+        "de": "Funkstörung simulieren",
+        "es": "Simular una interferencia de radio"
       },
       "description": {
         "en": "Test an alarm scene: the dongle reports a jamming, then its end 5 s later.",
-        "fr": "Tester une scène d'alarme : la clé signale un brouillage, puis sa fin 5 s après."
+        "fr": "Tester une scène d'alarme : la clé signale un brouillage, puis sa fin 5 s après.",
+        "de": "Eine Alarmszene testen: Der Stick meldet eine Störung, dann 5 s später ihr Ende.",
+        "es": "Probar una escena de alarma: la llave notifica una interferencia y su fin 5 s después."
       },
       "timeout_seconds": 10,
       "fields": [
@@ -1223,7 +1549,9 @@
           "type": "number",
           "label": {
             "en": "Delay (s)",
-            "fr": "Délai (s)"
+            "fr": "Délai (s)",
+            "de": "Verzögerung (s)",
+            "es": "Retardo (s)"
           },
           "required": false,
           "default": 0,
@@ -1237,7 +1565,9 @@
           "type": "boolean",
           "label": {
             "en": "Simulation sent",
-            "fr": "Simulation envoyée"
+            "fr": "Simulation envoyée",
+            "de": "Simulation gesendet",
+            "es": "Simulación enviada"
           }
         }
       ]

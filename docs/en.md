@@ -74,7 +74,7 @@ time and the protocols received, plus any error in your settings.
 ## 3. Sensors, detectors and remotes (heard)
 
 Nothing to declare: as soon as the dongle hears a device, it appears in the
-**Discovery** tab. Create the ones that are yours — the neighbours' probes are
+**Discover** tab. Create the ones that are yours — the neighbours' probes are
 heard too, they simply stay there. Values and scene triggers only reach the
 devices you created.
 
@@ -108,7 +108,7 @@ the **Pair an actuator** button:
 2. fill in a name, the kind, the protocol and a free address (0 to 255, or A1
    to P16), then run the action;
 3. the dongle sends the pairing frame, and the receiver is added to the
-   **Actuators** field. Create it from the **Discovery** tab.
+   **Actuators** field. Create it from the **Discover** tab.
 
 You can also type the field by hand, entries separated by `;`:
 
@@ -163,5 +163,5 @@ whether each one is already a device in Gladys.
 - **A shutter does not move**: it must be paired once (section 4). For RTS,
   the shutter must be in programming mode (PROG held on its remote) when the
   pairing frame is sent.
-- **Too many devices in Discovery**: raise the minimum radio quality, untick
+- **Too many devices in the Discover tab**: raise the minimum radio quality, untick
   the protocols you do not use.
