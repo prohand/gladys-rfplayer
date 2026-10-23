@@ -1,6 +1,6 @@
 {
   "name": "gladys-rfplayer",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": true,
   "description": "Gladys Assistant external integration for the Ziblue / GCE RFPlayer RFP1000 433/868 MHz dongle.",
   "type": "module",
