@@ -4,6 +4,8 @@ Connect a **Ziblue / GCE Electronics RFPlayer RFP1000** (433 and 868 MHz) to
 Gladys: radio sensors and detectors, remotes and wall switches, and the
 receivers the dongle drives (plugs, lights, Somfy RTS shutters, gates).
 
+Requires **Gladys 5.3 or later**.
+
 ## 1. Expose the dongle over TCP
 
 The integration runs in an isolated container that **cannot open a USB
@@ -147,7 +149,9 @@ Actions:
 
 The **RFPlayer radio** widget shows whether the dongle is connected, the
 jamming state, the counters and the last emitters heard, with a badge telling
-whether each one is already a device in Gladys.
+whether each one is already a device in Gladys. Its **Send a radio order**
+button opens a short form (protocol, address, order, level): the same as the
+scene action, handy to test a receiver while pairing it.
 
 ## Troubleshooting
 

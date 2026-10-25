@@ -5,6 +5,8 @@ MHz) à Gladys : capteurs et détecteurs radio, télécommandes et interrupteurs
 muraux, et les récepteurs pilotés par la clé (prises, lampes, volets Somfy RTS,
 portails).
 
+Il faut **Gladys 5.3 ou plus récent**.
+
 ## 1. Rendre la clé accessible en TCP
 
 L'intégration tourne dans un conteneur isolé qui **ne peut pas ouvrir de port
@@ -157,7 +159,10 @@ Actions :
 
 Le widget **Radio RFPlayer** montre si la clé est connectée, l'état du
 brouillage, les compteurs et les derniers émetteurs entendus, avec un badge qui
-dit si chacun est déjà un appareil dans Gladys.
+dit si chacun est déjà un appareil dans Gladys. Son bouton **Envoyer un ordre
+radio** ouvre un court formulaire (protocole, adresse, ordre, niveau) : la même
+chose que l'action de scène, pratique pour tester un récepteur pendant son
+appairage.
 
 ## En cas de problème
 

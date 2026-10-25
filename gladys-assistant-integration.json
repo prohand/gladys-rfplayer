@@ -10,9 +10,21 @@
   },
   "version": "2.1.1",
   "docker_image": "ghcr.io/prohand/gladys-rfplayer:2.1.1",
-  "gladys_version": ">=5.1.0",
+  "gladys_version": ">=5.3.0",
   "cover_image": "https://raw.githubusercontent.com/prohand/gladys-rfplayer/main/cover.png",
   "categories": ["protocols", "security", "environment"],
+  "keywords": [
+    "rfp1000",
+    "gce electronics",
+    "oregon scientific",
+    "chacon dio",
+    "somfy rts",
+    "visonic",
+    "x2d",
+    "x10",
+    "owl",
+    "blyss"
+  ],
   "transports": ["local"],
   "config_schema": [
     {

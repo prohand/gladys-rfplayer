@@ -40,9 +40,58 @@ function minGladysVersion() {
   return match.slice(1).map(Number);
 }
 
-test('scene and widget fields require Gladys >= 5.1.0', () => {
+function floorAtLeast(wantedMajor, wantedMinor) {
   const [major, minor] = minGladysVersion();
-  assert.ok(major > 5 || (major === 5 && minor >= 1), manifest.gladys_version);
+  return major > wantedMajor || (major === wantedMajor && minor >= wantedMinor);
+}
+
+test('scene and widget fields require Gladys >= 5.1.0', () => {
+  assert.ok(floorAtLeast(5, 1), manifest.gladys_version);
+});
+
+test('keywords, countries and music require Gladys >= 5.3.0', () => {
+  if (['keywords', 'countries', 'music'].some((field) => field in manifest)) {
+    assert.ok(floorAtLeast(5, 3), manifest.gladys_version);
+  }
+});
+
+test('the search keywords follow the store rules', () => {
+  const { keywords } = manifest;
+  assert.ok(Array.isArray(keywords) && keywords.length >= 1 && keywords.length <= 10);
+  const normalized = keywords.map((keyword) => keyword.trim().toLowerCase());
+  assert.equal(new Set(normalized).size, keywords.length, 'keywords must be unique');
+  for (const keyword of normalized) {
+    assert.ok(keyword.length >= 2 && keyword.length <= 30, `keyword "${keyword}"`);
+  }
+});
+
+test('the RFPlayer is usable anywhere: no countries restriction', () => {
+  assert.equal(manifest.countries, undefined);
+});
+
+test('the catalog categories come from the store vocabulary', () => {
+  const vocabulary = [
+    'climate',
+    'lighting',
+    'energy',
+    'security',
+    'multimedia',
+    'appliances',
+    'environment',
+    'protocols',
+    'network',
+    'notifications',
+    'assistants',
+    'services',
+    'transport',
+    'vehicles',
+    'servers',
+    'leisure',
+  ];
+  assert.equal(new Set(manifest.categories).size, manifest.categories.length);
+  for (const category of manifest.categories) {
+    assert.ok(vocabulary.includes(category), `unknown category "${category}"`);
+  }
 });
 
 test('1 to 3 catalog categories, a local-only transport', () => {

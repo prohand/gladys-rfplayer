@@ -7,16 +7,135 @@
 //
 // The content is declarative (the core renders it, no HTML): status rows,
 // tiles, a card list and buttons. Texts are `{ en, fr, de, es }`, picked by the core.
+//
+// A second button opens a short form (protocol, address, order, level): the
+// `send_order` scene action, from the dashboard — the radio test a user wants
+// while pairing a receiver. The form is validated by the core, then the order
+// by buildOrder like every other one: nothing typed reaches the wire unchecked.
 // -----------------------------------------------------------------------------
 
 import { WIDGET_COLORS } from '@gladysassistant/integration-sdk';
 import { HEARD_BLUEPRINTS } from '../devices/index.js';
 import { isCreated } from '../devices/helpers.js';
+import { SEND_PROTOCOLS } from '../rfplayer/protocol.js';
+import { freeOrderCommand } from './orders.js';
 
 /** Key of the manifest widget. Never renamed: dashboards store it. */
 export const RFPLAYER_WIDGET = 'rfplayer';
 
-export const WIDGET_ACTIONS = { PING: 'ping' };
+/** Widget action keys: relayed back by key, never renamed. */
+export const WIDGET_ACTIONS = { PING: 'ping', SEND_ORDER: 'send_order' };
+
+/** The content budget of the core: 8 components at most. */
+const MAX_COMPONENTS = 8;
+
+/** Orders of the form, as the `send_order` scene action words them. */
+export const FORM_ORDERS = [
+  {
+    value: 'on',
+    label: { en: 'On / up', fr: 'Allumer / monter', de: 'Ein / hoch', es: 'Encender / subir' },
+  },
+  {
+    value: 'off',
+    label: {
+      en: 'Off / down',
+      fr: 'Éteindre / descendre',
+      de: 'Aus / runter',
+      es: 'Apagar / bajar',
+    },
+  },
+  {
+    value: 'dim',
+    label: {
+      en: 'Dim to level',
+      fr: 'Varier au niveau',
+      de: 'Auf Stufe dimmen',
+      es: 'Atenuar al nivel',
+    },
+  },
+  {
+    value: 'my',
+    label: {
+      en: 'My (Somfy RTS)',
+      fr: 'My (Somfy RTS)',
+      de: 'My (Somfy RTS)',
+      es: 'My (Somfy RTS)',
+    },
+  },
+  {
+    value: 'toggle',
+    label: {
+      en: 'Toggle (Edisio)',
+      fr: 'Inverser (Edisio)',
+      de: 'Umschalten (Edisio)',
+      es: 'Alternar (Edisio)',
+    },
+  },
+  { value: 'assoc', label: { en: 'Pair', fr: 'Appairer', de: 'Anlernen', es: 'Emparejar' } },
+  {
+    value: 'dissoc',
+    label: { en: 'Unpair', fr: 'Désappairer', de: 'Ablernen', es: 'Desemparejar' },
+  },
+];
+
+/** The "Send a radio order" button and its form (4 fields, the core's maximum). */
+function orderButton() {
+  return {
+    type: 'button',
+    label: {
+      en: 'Send a radio order',
+      fr: 'Envoyer un ordre radio',
+      de: 'Funkbefehl senden',
+      es: 'Enviar orden de radio',
+    },
+    icon: 'send',
+    style: 'secondary',
+    action: {
+      key: WIDGET_ACTIONS.SEND_ORDER,
+      fields: [
+        {
+          key: 'protocol',
+          type: 'select',
+          label: { en: 'Protocol', fr: 'Protocole', de: 'Protokoll', es: 'Protocolo' },
+          required: true,
+          default: 'CHACON',
+          options: SEND_PROTOCOLS.map((protocol) => ({
+            value: protocol,
+            label: { en: protocol, fr: protocol, de: protocol, es: protocol },
+          })),
+        },
+        {
+          key: 'address',
+          type: 'string',
+          label: { en: 'Address', fr: 'Adresse', de: 'Adresse', es: 'Dirección' },
+          placeholder: {
+            en: '0 to 255, or A1 to P16',
+            fr: '0 à 255, ou A1 à P16',
+            de: '0 bis 255 oder A1 bis P16',
+            es: '0 a 255, o A1 a P16',
+          },
+          required: true,
+        },
+        {
+          key: 'order',
+          type: 'select',
+          label: { en: 'Order', fr: 'Ordre', de: 'Befehl', es: 'Orden' },
+          required: true,
+          default: 'on',
+          options: FORM_ORDERS,
+        },
+        {
+          key: 'level',
+          type: 'number',
+          label: { en: 'Level (%)', fr: 'Niveau (%)', de: 'Stufe (%)', es: 'Nivel (%)' },
+          required: false,
+          min: 0,
+          max: 100,
+        },
+      ],
+    },
+  };
+}
 
 export const DEFAULT_EMITTERS = 5;
 const MAX_EMITTERS = 8;
@@ -258,13 +377,19 @@ export function buildWidget(service, { settings = {}, now = service.now() } = {}
       link: { url: DOCS_URL },
     },
   );
+  // Last, and only within the budget: the core drops what overflows in content
+  // order, and a configuration notice or the emitters matter more.
+  if (components.length < MAX_COMPONENTS) components.push(orderButton());
 
   // Frames refresh it (see RfPlayerService.refreshWidgets): the TTL is a safety net.
   return { ttl_seconds: 120, components };
 }
 
 /** A tapped widget button: resolves the toast. */
-export async function widgetAction(service, actionKey) {
+export async function widgetAction(service, actionKey, { values } = {}) {
+  if (actionKey === WIDGET_ACTIONS.SEND_ORDER) {
+    return sendFormOrder(service, values);
+  }
   if (actionKey !== WIDGET_ACTIONS.PING) {
     throw new Error(`Unknown widget action: ${actionKey}`);
   }
@@ -282,5 +407,33 @@ export async function widgetAction(service, actionKey) {
     fr: `La clé a répondu en ${ms} ms.`,
     de: `Der Stick hat in ${ms} ms geantwortet.`,
     es: `La llave ha respondido en ${ms} ms.`,
+  };
+}
+
+/**
+ * The "Send a radio order" form. A core too old for widget forms relays the
+ * action without `values`: refused, never guessed. An invalid order throws
+ * (the core shows the reason); a dongle that is down is a toast.
+ */
+async function sendFormOrder(service, values) {
+  if (!values?.protocol || !values?.address || !values?.order) {
+    throw new Error('Fill in the protocol, the address and the order in the form of the button');
+  }
+  const command = freeOrderCommand(values);
+  if (!service.link.ready) {
+    return {
+      en: 'The dongle is not connected: order not sent.',
+      fr: "La clé n'est pas connectée : ordre non envoyé.",
+      de: 'Der Stick ist nicht verbunden: Befehl nicht gesendet.',
+      es: 'La llave no está conectada: orden no enviada.',
+    };
+  }
+  await service.link.order(command);
+  service.noteOrder(command);
+  return {
+    en: `Order sent: ${command}`,
+    fr: `Ordre envoyé : ${command}`,
+    de: `Befehl gesendet: ${command}`,
+    es: `Orden enviada: ${command}`,
   };
 }

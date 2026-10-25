@@ -84,7 +84,9 @@ for (const [key, handler] of Object.entries(SCENE_ACTIONS)) {
 
 // --- Dashboard widget (Gladys 5.1+) -------------------------------------------
 gladys.onWidgetGet(RFPLAYER_WIDGET, async ({ settings }) => buildWidget(service, { settings }));
-gladys.onWidgetAction(RFPLAYER_WIDGET, (actionKey) => widgetAction(service, actionKey));
+gladys.onWidgetAction(RFPLAYER_WIDGET, (actionKey, _params, options) =>
+  widgetAction(service, actionKey, options),
+);
 
 // --- Configuration updated by the user ---------------------------------------
 gladys.onConfigUpdated(async (newConfig) => {
