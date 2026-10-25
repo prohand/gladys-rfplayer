@@ -4,6 +4,8 @@ Verbinde einen **Ziblue / GCE Electronics RFPlayer RFP1000** (433 und 868 MHz) m
 Gladys: Funksensoren und -melder, Fernbedienungen und Wandschalter sowie die
 Empfänger, die der Stick steuert (Steckdosen, Lampen, Somfy-RTS-Rollläden, Tore).
 
+**Gladys 5.3 oder neuer** ist erforderlich.
+
 ## 1. Den Stick über TCP bereitstellen
 
 Die Integration läuft in einem isolierten Container, der **keinen USB-Port
@@ -155,7 +157,10 @@ Aktionen:
 
 Das Widget **RFPlayer-Funk** zeigt, ob der Stick verbunden ist, den
 Störungszustand, die Zähler und die zuletzt empfangenen Sender, mit einem Badge,
-das angibt, ob jeder davon bereits ein Gerät in Gladys ist.
+das angibt, ob jeder davon bereits ein Gerät in Gladys ist. Seine Schaltfläche
+**Funkbefehl senden** öffnet ein kurzes Formular (Protokoll, Adresse, Befehl,
+Stufe): dasselbe wie die Szenen-Aktion, praktisch, um einen Empfänger beim
+Anlernen zu testen.
 
 ## Fehlerbehebung
 

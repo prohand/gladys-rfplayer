@@ -11,7 +11,8 @@ and the JavaScript SDK
 - **Transport: local only** (`"transports": ["local"]`). No cloud, no account:
   the dongle is on your network, every device carries a `local` /
   `unreachable` badge.
-- **Gladys ≥ 5.1.0** (scene triggers, scene actions, dashboard widget).
+- **Gladys ≥ 5.3.0** (scene triggers, scene actions and dashboard widget since 5.1; search
+  keywords since 5.3).
 - Catalog categories: `protocols`, `security`, `environment`.
 
 User documentation: [English](docs/en.md) · [Français](docs/fr.md) · [Deutsch](docs/de.md) ·
@@ -48,6 +49,7 @@ Gladys 5.1 capabilities:
 | Scene action | `send_order`       | [`src/capabilities/scenes.js`](src/capabilities/scenes.js)    |
 | Scene action | `simulate_jamming` | idem                                                          |
 | Widget       | `rfplayer`         | [`src/capabilities/widget.js`](src/capabilities/widget.js)    |
+| Widget form  | `send_order`       | idem ("Send a radio order" button, Gladys 5.2+ forms)         |
 
 Configuration-screen actions: **Test the connection**, **Pair an actuator**,
 **Simulate a jamming** ([`src/capabilities/actions.js`](src/capabilities/actions.js)).

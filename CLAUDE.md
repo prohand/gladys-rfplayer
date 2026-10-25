@@ -13,7 +13,7 @@ FS20, Edisio, Parrot…). It started from the official JavaScript template
 (GladysAssistant/integration-template-js); the workflows mirror
 prohand/gladys-devmel.
 
-Gladys 5.1+ capabilities: scene triggers (remote pressed, detector triggered,
+Requires Gladys 5.3+. Gladys 5.1+ capabilities: scene triggers (remote pressed, detector triggered,
 battery low, jamming), scene actions (send an order, simulate a jamming) and the
 "RFPlayer radio" widget.
 
@@ -61,7 +61,8 @@ test/                        node --test; fakes in test/helpers/
 - **Commands are validated, never concatenated.** Every line written goes
   through `buildOrder` / `toLine`, which refuse anything but known actions,
   protocols, addresses and numbers. `.` is the dongle's command separator: user
-  input must never carry one (a scene could otherwise send `FACTORYRESET`).
+  input must never carry one (a scene could otherwise send `FACTORYRESET`). The widget's
+  "Send a radio order" form goes through `freeOrderCommand` like the `send_order` scene action.
 - **Radio orders are never acknowledged**: actuator features are
   `has_feedback: false` and show what Gladys sent.
 - **Heard devices only publish once created**: states and scene events go to

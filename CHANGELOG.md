@@ -10,6 +10,17 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Added
+
+- "RFPlayer radio" widget: a **Send a radio order** button opens a form (protocol, address,
+  order, level) to send any order from the dashboard, validated like the scene action.
+- Catalog search keywords (RFP1000, Oregon Scientific, Chacon DiO, Visonic, X2D…).
+
+### Changed
+
+- Gladys 5.3.0 or newer is now required.
+- `@gladysassistant/integration-sdk` updated to 0.16.0.
+
 ## [2.1.1] - 2026-10-23
 
 - Maintenance release, no functional change.

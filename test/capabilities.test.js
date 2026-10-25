@@ -3,7 +3,15 @@ import assert from 'node:assert/strict';
 import { validateWidgetContent } from '@gladysassistant/integration-sdk';
 import { MANIFEST_ACTIONS } from '../src/capabilities/actions.js';
 import { SCENE_ACTIONS } from '../src/capabilities/scenes.js';
-import { buildWidget, describeAge, widgetAction } from '../src/capabilities/widget.js';
+import { readFile } from 'node:fs/promises';
+import {
+  buildWidget,
+  describeAge,
+  FORM_ORDERS,
+  WIDGET_ACTIONS,
+  widgetAction,
+} from '../src/capabilities/widget.js';
+import { SEND_PROTOCOLS } from '../src/rfplayer/protocol.js';
 import { freeOrderCommand } from '../src/capabilities/orders.js';
 import { createService } from './helpers/setup.js';
 import { FRAMES } from './helpers/frames.js';
@@ -197,6 +205,55 @@ test('the widget button pings the dongle', async () => {
   assertTranslated(await widgetAction(up.service, 'ping'));
   assertTranslated(await widgetAction(down.service, 'ping'));
   await assert.rejects(widgetAction(up.service, 'nope'), /Unknown widget action/);
+});
+
+test('the widget form sends a free radio order, validated like a scene one', async () => {
+  const { link, service } = await createService();
+  await service.handleFrame(FRAMES.chaconOn);
+  const content = buildWidget(service);
+  const button = content.components.find((c) => c.action?.key === WIDGET_ACTIONS.SEND_ORDER);
+  assert.ok(button, 'the order form is offered');
+  assert.deepEqual(
+    button.action.fields.map((field) => field.key),
+    ['protocol', 'address', 'order', 'level'],
+  );
+
+  const toast = await widgetAction(service, WIDGET_ACTIONS.SEND_ORDER, {
+    values: { protocol: 'RTS', address: '5', order: 'my' },
+  });
+  assert.deepEqual(link.orders, ['DIM RTS ID 5 %4']);
+  assert.match(toast.en, /DIM RTS ID 5 %4/);
+  assertTranslated(toast);
+  assert.equal(service.ordersSent, 1);
+
+  // Never concatenated: the separator of the dongle commands is refused.
+  await assert.rejects(
+    widgetAction(service, WIDGET_ACTIONS.SEND_ORDER, {
+      values: { protocol: 'CHACON', address: '1.FACTORYRESET', order: 'on' },
+    }),
+  );
+  // A core relaying the action without the form values: refused, never guessed.
+  await assert.rejects(widgetAction(service, WIDGET_ACTIONS.SEND_ORDER), /Fill in/);
+  assert.deepEqual(link.orders, ['DIM RTS ID 5 %4']);
+
+  const down = await createService({ ready: false });
+  const refused = await widgetAction(down.service, WIDGET_ACTIONS.SEND_ORDER, {
+    values: { protocol: 'CHACON', address: '1', order: 'on' },
+  });
+  assert.match(refused.en, /not connected/);
+});
+
+test('the widget form offers what the send_order scene action offers', async () => {
+  const manifest = JSON.parse(
+    await readFile(new URL('../gladys-assistant-integration.json', import.meta.url), 'utf8'),
+  );
+  const fields = manifest.scene_actions.find((a) => a.key === 'send_order').fields;
+  const optionsOf = (key) => fields.find((f) => f.key === key).options.map((o) => o.value);
+  assert.deepEqual(SEND_PROTOCOLS, optionsOf('protocol'));
+  assert.deepEqual(
+    FORM_ORDERS.map((o) => o.value),
+    optionsOf('order'),
+  );
 });
 
 test('describeAge', () => {

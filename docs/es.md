@@ -4,6 +4,8 @@ Conecte un **Ziblue / GCE Electronics RFPlayer RFP1000** (433 y 868 MHz) a
 Gladys: sensores y detectores de radio, mandos e interruptores de pared, y los
 receptores que controla la llave (enchufes, luces, persianas Somfy RTS, portones).
 
+Se necesita **Gladys 5.3 o posterior**.
+
 ## 1. Exponer la llave por TCP
 
 La integración se ejecuta en un contenedor aislado que **no puede abrir un puerto
@@ -152,7 +154,9 @@ Acciones:
 
 El widget **Radio RFPlayer** muestra si la llave está conectada, el estado de
 interferencia, los contadores y los últimos emisores recibidos, con una insignia
-que indica si cada uno ya es un dispositivo en Gladys.
+que indica si cada uno ya es un dispositivo en Gladys. Su botón **Enviar orden
+de radio** abre un breve formulario (protocolo, dirección, orden, nivel): lo
+mismo que la acción de escena, práctico para probar un receptor al emparejarlo.
 
 ## Solución de problemas
 
