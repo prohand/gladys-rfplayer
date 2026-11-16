@@ -10,6 +10,10 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-11-16
+
+- Maintenance release, no functional change.
+
 ## [2.2.0] - 2026-10-25
 
 ### Added
@@ -81,7 +85,8 @@ the notes of the version's GitHub Release.
   `CLAUDE.md`, CI (format, lint, tests on Node 22 and 24, store checks, Docker
   build), UI-driven releases and Dependabot.
 
-[Unreleased]: https://github.com/prohand/gladys-rfplayer/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/prohand/gladys-rfplayer/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/prohand/gladys-rfplayer/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/prohand/gladys-rfplayer/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/prohand/gladys-rfplayer/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/prohand/gladys-rfplayer/compare/v2.0.1...v2.1.0
