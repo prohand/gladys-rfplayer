@@ -10,6 +10,10 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [2.2.3] - 2026-11-16
+
+- Maintenance release, no functional change.
+
 ## [2.2.2] - 2026-11-16
 
 - Update `@gladysassistant/integration-sdk` to 0.16.1 (security update).
@@ -89,7 +93,8 @@ the notes of the version's GitHub Release.
   `CLAUDE.md`, CI (format, lint, tests on Node 22 and 24, store checks, Docker
   build), UI-driven releases and Dependabot.
 
-[Unreleased]: https://github.com/prohand/gladys-rfplayer/compare/v2.2.2...HEAD
+[Unreleased]: https://github.com/prohand/gladys-rfplayer/compare/v2.2.3...HEAD
+[2.2.3]: https://github.com/prohand/gladys-rfplayer/compare/v2.2.2...v2.2.3
 [2.2.2]: https://github.com/prohand/gladys-rfplayer/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/prohand/gladys-rfplayer/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/prohand/gladys-rfplayer/compare/v2.1.1...v2.2.0
