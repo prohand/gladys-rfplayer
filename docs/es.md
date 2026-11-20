@@ -174,5 +174,23 @@ mismo que la acción de escena, práctico para probar un receptor al emparejarlo
 - **Una persiana no se mueve**: debe emparejarse una vez (sección 4). En RTS, la
   persiana debe estar en modo programación (PROG mantenido en su mando) cuando se
   envía la trama de emparejamiento.
+- **Una persiana RTS emparejada deja de responder tras un nuevo
+  emparejamiento**: en RTS, la trama de emparejamiento es un conmutador. Un
+  motor que ya conoce la dirección la olvida; uno que no la conoce la aprende.
+  No vuelva a emparejar una dirección que una persiana aún conoce: use una
+  dirección nueva, o quite antes la antigua (PROG mantenido en el mando
+  original, y luego el formulario **Enviar una orden de radio** con la orden
+  «Desemparejar»).
+- **Una persiana RTS rechaza todo nuevo emparejamiento**: un motor Somfy solo
+  recuerda un número limitado de mandos (a menudo unos doce). Tras muchos
+  intentos, quite las direcciones inútiles como arriba, o reinicie el motor según
+  su manual (esto borra también el mando original).
+- **Dos persianas RTS se mueven juntas**: aprendieron la misma dirección, en
+  general porque se pulsó PROG en un mando de grupo. Empareje una persiana a la
+  vez, desde su propio mando, con una dirección por persiana.
+- **Empezar de cero**: el emparejamiento lo guardan los receptores, no la llave.
+  Borre los dispositivos en Gladys y vacíe el campo **Actuadores**, pero no envíe
+  `FACTORYRESET` a la llave: olvidaría sus contadores RTS, y las persianas ya
+  emparejadas dejarían de obedecerle.
 - **Demasiados dispositivos en Descubrir**: suba la calidad de radio mínima y
   desmarque los protocolos que no use.

@@ -10,6 +10,12 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+### Changed
+
+- Documentation: Somfy RTS troubleshooting (pairing is a toggle, motor memory
+  full, two shutters on one address, starting from scratch without
+  `FACTORYRESET`).
+
 ## [2.2.3] - 2026-11-16
 
 - Maintenance release, no functional change.
