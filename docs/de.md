@@ -177,5 +177,23 @@ Anlernen zu testen.
 - **Ein Rollladen bewegt sich nicht**: Er muss einmal angelernt werden (Abschnitt
   4). Bei RTS muss der Rollladen im Programmiermodus sein (PROG auf seiner
   Fernbedienung gehalten), wenn der Anlern-Frame gesendet wird.
+- **Ein angelernter RTS-Rollladen reagiert nach erneutem Anlernen nicht mehr**:
+  Bei RTS wirkt der Anlern-Frame wie ein Umschalter. Ein Motor, der die Adresse
+  schon kennt, vergisst sie; ein Motor, der sie nicht kennt, lernt sie. Lerne
+  nie eine Adresse erneut an, die ein Rollladen noch kennt: Nimm eine neue
+  Adresse oder entferne zuerst die alte (PROG auf der Original-Fernbedienung
+  halten, dann das Formular **Funkbefehl senden** mit dem Befehl „Ablernen“).
+- **Ein RTS-Rollladen nimmt kein neues Anlernen mehr an**: Ein Somfy-Motor
+  speichert nur eine begrenzte Zahl von Fernbedienungen (oft etwa zwölf). Nach
+  vielen Versuchen entferne die unnötigen Adressen wie oben oder setze den Motor
+  laut Anleitung zurück (das löscht auch die Original-Fernbedienung).
+- **Zwei RTS-Rollläden bewegen sich zusammen**: Sie haben dieselbe Adresse
+  gelernt, meist weil PROG auf einer Gruppen-Fernbedienung gedrückt wurde. Lerne
+  einen Rollladen nach dem anderen an, über seine eigene Fernbedienung, mit einer
+  Adresse pro Rollladen.
+- **Neu anfangen**: Das Anlernen speichern die Empfänger, nicht der Stick.
+  Lösche die Geräte in Gladys und leere das Feld **Aktoren**, aber sende kein
+  `FACTORYRESET` an den Stick: Er würde seine RTS-Zähler vergessen, und die schon
+  angelernten Rollläden würden ihm nicht mehr gehorchen.
 - **Zu viele Geräte in Entdecken**: Erhöhe die minimale Funkqualität und
   wähle die Protokolle ab, die du nicht nutzt.

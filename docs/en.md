@@ -167,5 +167,22 @@ scene action, handy to test a receiver while pairing it.
 - **A shutter does not move**: it must be paired once (section 4). For RTS,
   the shutter must be in programming mode (PROG held on its remote) when the
   pairing frame is sent.
+- **A paired RTS shutter stops answering after a new pairing**: in RTS, the
+  pairing frame is a toggle. A motor that already knows the address forgets it,
+  a motor that does not know it learns it. Never pair again an address a
+  shutter still knows: pick a new address, or first remove the old one (PROG
+  held on the original remote, then the **Send a radio order** form with the
+  "Unpair" order).
+- **An RTS shutter refuses any new pairing**: a Somfy motor only remembers a
+  limited number of remotes (often about twelve). After many attempts, remove
+  the unused addresses as above, or reset the motor as its manual explains
+  (this also erases the original remote).
+- **Two RTS shutters move together**: they learned the same address, usually
+  because PROG was held on a group remote. Pair one shutter at a time, from its
+  own remote, with one address per shutter.
+- **Starting from scratch**: pairing is kept by the receivers, not by the
+  dongle. Delete the devices in Gladys and empty the **Actuators** field, but do
+  not send `FACTORYRESET` to the dongle: it would forget its RTS counters, and
+  the shutters already paired would no longer answer it.
 - **Too many devices in the Discover tab**: raise the minimum radio quality, untick
   the protocols you do not use.
